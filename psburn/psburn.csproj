@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="assets\psboilerplate.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="assets\manifest.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="assets\manifest.xml" />
+    <EmbeddedResource Include="assets\psboilerplate.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21216.1" />
+  </ItemGroup>
+
+</Project>
