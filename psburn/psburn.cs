@@ -135,6 +135,11 @@ namespace psburn
 
 			foreach (string line in CompileCsLines)
 			{
+				if (line.StartsWith("#"))
+				{
+					CompileCsLines[Array.IndexOf(CompileCsLines, line)] = "";
+				}
+
 				if (line.Contains("string ExPolicy"))
 				{
 					CompileCsLines[Array.IndexOf(CompileCsLines, line)] = $"\t\t\tstring ExPolicy = \"{executionpolicy}\";";
