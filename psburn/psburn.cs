@@ -107,9 +107,9 @@ namespace psburn
 
 			RootCommand.Handler = CommandHandler.Create<string, string, bool, bool, string, bool, bool, string, string>(
 													   (input, output, debug, verbose, icon, noconsole, uacadmin, executionpolicy, cscpath) =>
-			{
-				MainActivity(input, output, debug, verbose, icon, noconsole, uacadmin, executionpolicy, cscpath);
-			});
+													   {
+														   MainActivity(input, output, debug, verbose, icon, noconsole, uacadmin, executionpolicy, cscpath);
+													   });
 
 			return RootCommand.InvokeAsync(args).Result;
 		}
@@ -119,15 +119,24 @@ namespace psburn
 		{
 			// Verbose outputs
 			if (verbose)
-            {
+			{
 				Console.WriteLine($"PS Script: {input}");
 				Console.WriteLine($"Using Execution Policy: {executionpolicy}");
 				Console.WriteLine($"Debugging: {debug}");
 			}
 
 			// Reading powershell script and finding base name
-			string PSScriptFile = System.IO.File.ReadAllText(input);
+			string PSScriptFile = "";
+			string[] PSScriptFileLines = System.IO.File.ReadAllLines(input);
 			string FileBaseName = System.IO.Path.GetFileNameWithoutExtension(input);
+
+			// Handling powershell script comments
+			foreach (string line in PSScriptFileLines)
+			{
+				if (line.StartsWith("#")) { PSScriptFile += "\n"; }
+				else if (line.EndsWith("\n")) { PSScriptFile += line; }
+				else { PSScriptFile += line + "\n"; }
+			}
 
 			// Dumping a cs file from psboilerplate.cs
 			string MainCsFile = $"{FileBaseName}.cs";
@@ -135,11 +144,6 @@ namespace psburn
 
 			foreach (string line in CompileCsLines)
 			{
-				if (line.StartsWith("#"))
-				{
-					CompileCsLines[Array.IndexOf(CompileCsLines, line)] = "";
-				}
-
 				if (line.Contains("string ExPolicy"))
 				{
 					CompileCsLines[Array.IndexOf(CompileCsLines, line)] = $"\t\t\tstring ExPolicy = \"{executionpolicy}\";";
@@ -187,15 +191,15 @@ namespace psburn
 			int SubprocessStatus = RunSubprocess(cscexe, cscargs);
 
 			if (debug == false)
-            {
+			{
 				if (uacadmin) { System.IO.File.Delete("manifest.xml"); }
-				System.IO.File.Delete(MainCsFile);			
+				System.IO.File.Delete(MainCsFile);
 			}
 
 			if (verbose)
 			{
 				if (SubprocessStatus == 1) { Console.WriteLine("Result: Unsucessfull"); }
-				else if (SubprocessStatus == 0) { Console.WriteLine("Result: Sucessfully"); }		
+				else if (SubprocessStatus == 0) { Console.WriteLine("Result: Sucessfully"); }
 			}
 
 		}
