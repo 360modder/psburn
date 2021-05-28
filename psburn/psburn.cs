@@ -1,207 +1,223 @@
-﻿using System;
-using System.CommandLine;
+﻿using System.CommandLine;
 using System.CommandLine.Invocation;
 
 
-namespace psburn
+namespace Psburn
 {
-	internal class psburn
-	{
-		public static string[] EmmededFileReadAllLines(string EmbeddedFile)
-		{
-			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-			System.IO.StreamReader LoadedFileStream = new System.IO.StreamReader(assembly.GetManifestResourceStream(EmbeddedFile));
+    class Psburn
+    {
+        public static int Main(string[] args)
+        {
+            // Root Command (psburn)
+            var RootCommand = new RootCommand("psburn is cross platform tool to compile dynamic powershell scripts into platform specific executables " +
+                                              "by encapsulating it inside a c# or python program.");
 
-			System.Collections.Generic.List<string> FileLines = new System.Collections.Generic.List<string>();
-			string line;
+            // Global Options
+            RootCommand.AddGlobalOption(new Option<string>(
+                aliases: new string[] { "-o", "--output" },
+                getDefaultValue: () => "working directory",
+                description: "path of output files")
+            );
 
+            RootCommand.AddGlobalOption(new Option<bool>(
+                aliases: new string[] { "-v", "--verbose" },
+                getDefaultValue: () => false,
+                description: "generate more outputs and logs than usual")
+            );
 
-			while ((line = LoadedFileStream.ReadLine()) != null)
-			{
-				FileLines.Add(line);
-			}
+            // Child Command (create)
+            var ChildCommandCreate = new Command("create", "create a psburn c# file");
+            RootCommand.AddCommand(ChildCommandCreate);
 
-			LoadedFileStream.Close();
-			return FileLines.ToArray();
-		}
+            // Child Command (create) - Arguments
+            ChildCommandCreate.AddArgument(new Argument<string>("psscript", "path of powershell script"));
 
-		public static int RunSubprocess(string file, string args)
-		{
-			try
-			{
-				var process = new System.Diagnostics.Process
-				{
-					StartInfo = new System.Diagnostics.ProcessStartInfo
-					{
-						FileName = file,
-						Arguments = args,
-						UseShellExecute = false,
-						RedirectStandardOutput = true,
-						CreateNoWindow = true
-					}
-				};
+            // Child Command (create) - Options
+            ChildCommandCreate.AddOption(new Option<bool>(
+                aliases: new string[] { "-e", "--experimental" },
+                getDefaultValue: () => false,
+                description: "use experimental features to create script")
+            );
 
-				process.Start();
+            ChildCommandCreate.AddOption(new Option<string>(
+                aliases: new string[] { "--execution-policy" },
+                getDefaultValue: () => "Bypass",
+                description: "execution policy for the powershell script")
+            );
 
-				while (!process.StandardOutput.EndOfStream)
-				{
-					var line = process.StandardOutput.ReadLine();
-					Console.WriteLine(line);
-				}
+            ChildCommandCreate.AddOption(new Option<string>(
+                aliases: new string[] { "--script-name" },
+                getDefaultValue: () => "basename of input file",
+                description: "set name of script")
+            );
 
-				process.WaitForExit();
-				return 0;
-			}
+            ChildCommandCreate.AddOption(new Option<string>(
+                aliases: new string[] { "--script-version" },
+                getDefaultValue: () => "1.0.0",
+                description: "set version of script")
+            );
 
-			catch (Exception e)
-			{
-				Console.WriteLine(e.Message);
-				return 1;
-			}
-		}
+            ChildCommandCreate.AddOption(new Option<bool>(
+                aliases: new string[] { "--blockcat" },
+                getDefaultValue: () => false,
+                description: "block cating of script which prevents script exposure")
+            );
 
-		public static int Main(string[] args)
-		{
-			var RootCommand = new RootCommand();
-			RootCommand.Description = "psburn is tool to burn powershell scripts into powershell dependent executables " +
-									  "by embedding it inside a C# program.";
+            ChildCommandCreate.AddOption(new Option<bool>(
+                aliases: new string[] { "--self-contained" },
+                getDefaultValue: () => false,
+                description: "enable this option if you are using --powershell-zip")
+            );
 
-			// Positional Arguments
-			var PositionalArgument1 = new Option<string>(aliases: new string[] { "-i", "--input" },
-														 description: "path to ps script");
-			PositionalArgument1.IsRequired = true;
-			RootCommand.Add(PositionalArgument1);
+            ChildCommandCreate.AddOption(new Option<bool>(
+                aliases: new string[] { "--onedir" },
+                getDefaultValue: () => false,
+                description: "run powershell from current directory")
+            );
 
-			// Optional Arguments
-			RootCommand.Add(new Option<string>(aliases: new string[] { "-o", "--output" },
-											   getDefaultValue: () => "Working Directory",
-											   description: "path of output executable file"));
+            ChildCommandCreate.AddOption(new Option<bool>(
+                aliases: new string[] { "--embed-resources" },
+                getDefaultValue: () => false,
+                description: "enable this option if you are using --resources-zip")
+            );
 
-			RootCommand.Add(new Option<bool>(aliases: new string[] { "-d", "--debug" },
-											 getDefaultValue: () => false,
-											 description: "don't delete runtime generated files and C# program"));
+            ChildCommandCreate.AddOption(new Option<bool>(
+                aliases: new string[] { "--no-extract" },
+                getDefaultValue: () => false,
+                description: "this option allows to host scripts purely from program instead of extracted version of them")
+            );
 
-			RootCommand.Add(new Option<bool>(aliases: new string[] { "-v", "--verbose" },
-											 getDefaultValue: () => false,
-											 description: "generate more outputs and logs than usual"));
+            ChildCommandCreate.Handler = CommandHandler.Create<string, bool, string, string, string, bool, bool, bool, bool, bool, string, bool>(PsburnCommand.Create);
 
-			RootCommand.Add(new Option<string>(aliases: new string[] { "--icon" },
-											   getDefaultValue: () => "No Icon",
-											   description: "apply icon to generated executable"));
+            // Child Command (cross)
+            var ChildCommandCross = new Command("cross", "create a psburn py script");
+            RootCommand.AddCommand(ChildCommandCross);
 
-			RootCommand.Add(new Option<bool>(aliases: new string[] { "--noconsole" },
-											 getDefaultValue: () => false,
-											 description: "create executable without a console, this helps for running scripts in background"));
+            // Child Command (cross) - Arguments
+            ChildCommandCross.AddArgument(new Argument<string>("psscript", "path of powershell script"));
 
-			RootCommand.Add(new Option<bool>(aliases: new string[] { "--uac-admin" },
-											 getDefaultValue: () => false,
-											 description: "this option creates a manifest which will request elevation upon application restart"));
+            // Child Command (cross) - Options
+            ChildCommandCross.AddOption(new Option<string>(
+                aliases: new string[] { "--execution-policy" },
+                getDefaultValue: () => "Bypass",
+                description: "execution policy for the powershell script")
+            );
 
-			RootCommand.Add(new Option<string>(aliases: new string[] { "--executionpolicy" },
-											   getDefaultValue: () => "Bypass",
-											   description: "execution policy for the powershell script"));
+            ChildCommandCross.AddOption(new Option<bool>(
+                aliases: new string[] { "--blockcat" },
+                getDefaultValue: () => false,
+                description: "block cating of script which prevents script exposure")
+            );
 
-			RootCommand.Add(new Option<string>(aliases: new string[] { "--cscpath" },
-											   getDefaultValue: () => "Auto Detect",
-											   description: "C# compiler path (C:\\Windows\\Microsoft.Net\\Framework\\<version>\\csc.exe)"));
+            ChildCommandCross.AddOption(new Option<bool>(
+                aliases: new string[] { "--onedir" },
+                getDefaultValue: () => false,
+                description: "run powershell from current directory")
+            );
 
-			RootCommand.Handler = CommandHandler.Create<string, string, bool, bool, string, bool, bool, string, string>(
-													   (input, output, debug, verbose, icon, noconsole, uacadmin, executionpolicy, cscpath) =>
-													   {
-														   MainActivity(input, output, debug, verbose, icon, noconsole, uacadmin, executionpolicy, cscpath);
-													   });
+            ChildCommandCross.Handler = CommandHandler.Create<string, string, bool, bool, string, bool>(PsburnCommand.Cross);
 
-			return RootCommand.InvokeAsync(args).Result;
-		}
+            // Child Command (build)
+            var ChildCommandBuild = new Command("build", "build an executable from c# program");
+            RootCommand.AddCommand(ChildCommandBuild);
 
-		public static void MainActivity(string input, string output, bool debug, bool verbose, string icon,
-										bool noconsole, bool uacadmin, string executionpolicy, string cscpath)
-		{
-			// Verbose outputs
-			if (verbose)
-			{
-				Console.WriteLine($"PS Script: {input}");
-				Console.WriteLine($"Using Execution Policy: {executionpolicy}");
-				Console.WriteLine($"Debugging: {debug}");
-			}
+            // Child Command (build) - Arguments
+            ChildCommandBuild.AddArgument(new Argument<string>("csfile", "path of c# file"));
+            ChildCommandBuild.AddArgument(new Argument<string>("psscript", "path of powershell script"));
 
-			// Reading powershell script and finding base name
-			string PSScriptFile = "";
-			string[] PSScriptFileLines = System.IO.File.ReadAllLines(input);
-			string FileBaseName = System.IO.Path.GetFileNameWithoutExtension(input);
+            // Child Command (build) - Options
+            ChildCommandBuild.AddOption(new Option<bool>(
+                aliases: new string[] { "-d", "--debug" },
+                getDefaultValue: () => false,
+                description: "don't delete runtime generated files")
+            );
 
-			// Handling powershell script comments
-			foreach (string line in PSScriptFileLines)
-			{
-				if (line.StartsWith("#")) { PSScriptFile += "\n"; }
-				else if (line.EndsWith("\n")) { PSScriptFile += line; }
-				else { PSScriptFile += line + "\n"; }
-			}
+            ChildCommandBuild.AddOption(new Option<string>(
+                aliases: new string[] { "-p", "--powershell-zip" },
+                getDefaultValue: () => "no zip",
+                description: "create a self contained executable")
+            );
 
-			// Dumping a cs file from psboilerplate.cs
-			string MainCsFile = $"{FileBaseName}.cs";
-			string[] CompileCsLines = EmmededFileReadAllLines("psburn.assets.psboilerplate.cs");
+            ChildCommandBuild.AddOption(new Option<string>(
+                aliases: new string[] { "-r", "--resources-zip" },
+                getDefaultValue: () => "no zip",
+                description: "embed resources from a zip file")
+            );
 
-			foreach (string line in CompileCsLines)
-			{
-				if (line.Contains("string ExPolicy"))
-				{
-					CompileCsLines[Array.IndexOf(CompileCsLines, line)] = $"\t\t\tstring ExPolicy = \"{executionpolicy}\";";
-				}
+            ChildCommandBuild.AddOption(new Option<string>(
+                aliases: new string[] { "--cscpath" },
+                getDefaultValue: () => "auto detect",
+                description: "c# compiler path (C:\\Windows\\Microsoft.Net\\Framework\\<version>\\csc.exe)")
+            );
 
-				if (line.Contains("string PSScriptFile"))
-				{
-					CompileCsLines[Array.IndexOf(CompileCsLines, line)] = $"\t\t\tstring PSScriptFile = @\"{PSScriptFile}\";";
-				}
-			}
+            ChildCommandBuild.AddOption(new Option<string>(
+                aliases: new string[] { "--icon" },
+                getDefaultValue: () => "no icon",
+                description: "apply icon to generated executable")
+            );
 
-			System.IO.File.WriteAllLines(MainCsFile, CompileCsLines);
+            ChildCommandBuild.AddOption(new Option<bool>(
+                aliases: new string[] { "--no-console" },
+                getDefaultValue: () => false,
+                description: "create executable without a console, this helps for running scripts in background for gui programs")
+            );
 
-			// Try to auto detect csc.exe
-			string cscexe;
-			if (cscpath == "Auto Detect")
-			{
-				var cscpaths = System.IO.Directory.GetDirectories("C:\\Windows\\Microsoft.NET\\Framework");
-				cscexe = System.IO.Path.Join(cscpaths[cscpaths.Length - 1], "csc.exe");
-			}
-			else { cscexe = cscpath; }
+            ChildCommandBuild.AddOption(new Option<bool>(
+                aliases: new string[] { "--uac-admin" },
+                getDefaultValue: () => false,
+                description: "request elevation upon application restart (windows specific)")
+            );
 
-			// Managing csc args supplied by user
-			string cscargs = "/nologo /optimize ";
+            ChildCommandBuild.AddOption(new Option<bool>(
+                aliases: new string[] { "--onedir" },
+                getDefaultValue: () => false,
+                description: "run powershell from current directory")
+            );
 
-			if (icon != "No Icon") { cscargs += $"/win32icon:\"{icon}\" "; }
-			if (noconsole) { cscargs += "/target:winexe "; }
-			if (uacadmin)
-			{
-				string[] ManifestFileContent = EmmededFileReadAllLines("psburn.assets.manifest.xml");
-				System.IO.File.WriteAllLines("manifest.xml", ManifestFileContent);
-				cscargs += $"/win32manifest:manifest.xml ";
-			}
-			if (output != "Working Directory") { cscargs += $"/out:\"{output}\" "; }
+            ChildCommandBuild.Handler = CommandHandler.Create<string, string, bool, string, string, string, string, bool, bool, bool, string, bool>(PsburnCommand.Build);
 
-			cscargs += $"\"{MainCsFile}\" ";
+            // Child Command (cbuild)
+            var ChildCommandCBuild = new Command("cbuild", "build an executable from python script");
+            RootCommand.AddCommand(ChildCommandCBuild);
 
-			if (verbose)
-			{
-				Console.WriteLine($"Using C# Compiler: {cscexe}");
-				Console.WriteLine($"Supplied C# Args: {cscargs}");
-			}
+            // Child Command (cbuild) - Arguments
+            ChildCommandCBuild.AddArgument(new Argument<string>("pyscript", "path of python script"));
+            ChildCommandCBuild.AddArgument(new Argument<string>("psscript", "path of powershell script"));
 
-			// Running windows inbuilt cs compiler to compile boiler genrated cs file
-			int SubprocessStatus = RunSubprocess(cscexe, cscargs);
+            // Child Command (cbuild) - Options
+            ChildCommandCBuild.AddOption(new Option<bool>(
+                aliases: new string[] { "-d", "--debug" },
+                getDefaultValue: () => false,
+                description: "don't delete runtime generated files")
+            );
 
-			if (debug == false)
-			{
-				if (uacadmin) { System.IO.File.Delete("manifest.xml"); }
-				System.IO.File.Delete(MainCsFile);
-			}
+            ChildCommandCBuild.AddOption(new Option<string>(
+                aliases: new string[] { "-p", "--powershell-zip" },
+                getDefaultValue: () => "no zip",
+                description: "create a self contained executable")
+            );
 
-			if (verbose)
-			{
-				if (SubprocessStatus == 1) { Console.WriteLine("Result: Unsucessfull"); }
-				else if (SubprocessStatus == 0) { Console.WriteLine("Result: Sucessfully"); }
-			}
+            ChildCommandCBuild.AddOption(new Option<string>(
+                aliases: new string[] { "-r", "--resources-zip" },
+                getDefaultValue: () => "no zip",
+                description: "embed resources from a zip file")
+            );
 
-		}
-	}
+            ChildCommandCBuild.AddOption(new Option<bool>(
+                aliases: new string[] { "--onedir" },
+                getDefaultValue: () => false,
+                description: "run powershell from current directory")
+            );
+
+            ChildCommandCBuild.AddOption(new Option<bool>(
+                aliases: new string[] { "--no-prompt" },
+                getDefaultValue: () => false,
+                description: "don't ask for any prompts")
+            );
+
+            ChildCommandCBuild.Handler = CommandHandler.Create<string, string, bool, string, string, bool, bool, string, bool>(PsburnCommand.CBuild);
+
+            return RootCommand.InvokeAsync(args).Result;
+        }
+    }
 }

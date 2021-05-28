@@ -4,22 +4,28 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU</Platforms>
+    <Authors>360modder</Authors>
+    <RepositoryUrl>htttps://github.com/360modder/psburn</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="assets\psboilerplate.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Remove="assets\extract.cs" />
+    <Compile Remove="assets\noextract.cs" />
+    <None Remove="assets\cross.py" />
     <None Remove="assets\manifest.xml" />
+	<None Remove="assets\ICSharpCode.SharpZipLib.dll" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="assets\cross.py" />
+    <EmbeddedResource Include="assets\extract.cs" />
+	<EmbeddedResource Include="assets\noextract.cs" />
     <EmbeddedResource Include="assets\manifest.xml" />
-    <EmbeddedResource Include="assets\psboilerplate.cs" />
+	<EmbeddedResource Include="assets\ICSharpCode.SharpZipLib.dll" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21216.1" />
   </ItemGroup>
 
