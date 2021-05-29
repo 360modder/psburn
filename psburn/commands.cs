@@ -434,8 +434,8 @@ namespace Psburn
             string Separator = Utils.IsWindows ? ";" : ":";
 
             // Generating args for pyinstaller
-            string PyInstallerArgs = $"{Path.GetFileName(pyscript)} ";
-            PyInstallerArgs += onedir ? "--onedir " : "--onefile ";
+            string PyInstallerArgs = $"{Path.GetFileName(pyscript)} --onefile ";
+
             PyInstallerArgs += $"--add-data \"{psscript}{Separator}.\" ";
 
             if (powershellzip != "no zip")
@@ -470,9 +470,12 @@ namespace Psburn
                 }
             }
 
-            foreach (string Dir in Directory.GetDirectories("dist"))
+            if (onedir == false)
             {
-                PyInstallerArgs += $"--add-data \"{Path.GetFullPath(Dir)}{Separator}{Path.GetRelativePath("dist", Dir)}\" ";
+                foreach (string Dir in Directory.GetDirectories("dist"))
+                {
+                    PyInstallerArgs += $"--add-data \"{Path.GetFullPath(Dir)}{Separator}{Path.GetRelativePath("dist", Dir)}\" ";
+                }
             }
 
             if (noprompt == false)
@@ -501,6 +504,41 @@ namespace Psburn
                 Directory.Move("dist/dist", "cdist");
                 Directory.Delete("dist", true);
                 Directory.Move("cdist", "dist");
+            }
+
+            if (onedir)
+            {
+                if (powershellzip != "no zip")
+                {
+                    Utils.PrintColoredText("info: ", ConsoleColor.Blue);
+                    Console.WriteLine($"extracting {powershellzip}");
+
+                    try { System.IO.Compression.ZipFile.ExtractToDirectory(powershellzip, "dist", true); }
+                    catch
+                    {
+                        if (verbose)
+                        {
+                            Utils.PrintColoredText("caution: ", ConsoleColor.Red);
+                            Console.WriteLine($"{powershellzip} has some extraction errors.");
+                        }
+                    }
+                }
+
+                if (resourceszip != "no zip")
+                {
+                    Utils.PrintColoredText("info: ", ConsoleColor.Blue);
+                    Console.WriteLine($"extracting {powershellzip}");
+
+                    try { System.IO.Compression.ZipFile.ExtractToDirectory(resourceszip, "dist", true); }
+                    catch
+                    {
+                        if (verbose)
+                        {
+                            Utils.PrintColoredText("caution: ", ConsoleColor.Red);
+                            Console.WriteLine($"{resourceszip} has some extraction errors.");
+                        }
+                    }
+                }
             }
         }
     }
