@@ -16,6 +16,12 @@ copyright: Copyright &copy; 2021 360modder
 # Configuration
 theme:
   name: material
+  favicon: images/favicon.png
+  
+  features:
+    - navigation.tabs
+    - navigation.instant
+
   palette:
     - scheme: default
       primary: indigo
@@ -29,11 +35,6 @@ theme:
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
-
-  # favicon: images/favicon.png
-  features:
-    - navigation.tabs
-    - navigation.instant
 
 # Customization
 extra:
