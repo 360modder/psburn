@@ -1,0 +1,62 @@
+# Project information
+site_name: PsBurn
+site_url: https://360modder.github.io/psburn/
+site_author: 360modder
+site_description: >-
+  documentation for psburn
+
+# Repository
+repo_url: https://github.com/360modder/psburn
+repo_name: 360modder/psburn
+edit_uri: ""
+
+# Copyright
+copyright: Copyright &copy; 2021 360modder
+
+# Configuration
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+  # favicon: images/favicon.png
+  features:
+    - navigation.tabs
+    - navigation.instant
+
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/360modder
+
+# Extensions
+markdown_extensions:
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.keys
+  - pymdownx.tabbed
+
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+# Page tree
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installations: gettingstarted/installations.md
+    - Workflow: gettingstarted/workflow.md
+    - Compiling Powershell Scripts: gettingstarted/compilingpsscripts.md
