@@ -30,8 +30,8 @@ theme:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
     - scheme: slate
-      primary: blue
-      accent: blue
+      primary: cyan
+      accent: cyan
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
@@ -61,3 +61,4 @@ nav:
     - Installations: gettingstarted/installations.md
     - Workflow: gettingstarted/workflow.md
     - Compiling Powershell Scripts: gettingstarted/compilingpsscripts.md
+    - Argparse Integration: gettingstarted/argparseintegration.md

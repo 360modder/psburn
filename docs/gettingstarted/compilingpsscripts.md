@@ -43,6 +43,24 @@ pyinstaller -h
 
 ```
 
+## Merging dll and exe files
+
+If you use *build* command it generates a dll which is requires by executable to run properly, you can merge this dll and exe using ilmerge or ilrepack.
+
+=== "Windows"
+
+	```shell
+	ILMerge ICSharpCode.SharpZipLib.dll <file.exe> /o:a.exe
+	```
+
+=== "Linux/MacOS"
+
+	```shell
+	mono ILRepack.exe ICSharpCode.SharpZipLib.dll <file.exe> /o:a.exe
+	```
+
 ## Oops got an error while building an executable, what to do ?
+
+*got nothing in dist*: You might encounter this problem while you are using relative path of files just replace relative paths with **absolute paths**.
 
 *csc path not found*: In linux and macos you will get this error, fix this error by adding **--cscpath csc** flag in build command.
