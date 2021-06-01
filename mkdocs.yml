@@ -24,8 +24,8 @@ theme:
 
   palette:
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: cyan
+      accent: cyan
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
@@ -45,6 +45,7 @@ extra:
 # Extensions
 markdown_extensions:
   - attr_list
+  - admonition
   - pymdownx.highlight
   - pymdownx.superfences
   - pymdownx.keys
@@ -62,3 +63,5 @@ nav:
     - Workflow: gettingstarted/workflow.md
     - Compiling Powershell Scripts: gettingstarted/compilingpsscripts.md
     - Argparse Integration: gettingstarted/argparseintegration.md
+  - Usages:
+    - Creating Self Contained Executable: usages/creatingselfcontainedexecutable.md

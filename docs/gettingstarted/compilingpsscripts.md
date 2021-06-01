@@ -61,6 +61,8 @@ If you use *build* command it generates a dll which is requires by executable to
 
 ## Oops got an error while building an executable, what to do ?
 
-*got nothing in dist*: You might encounter this problem while you are using relative path of files just replace relative paths with **absolute paths**.
+!!! error "Error: got nothing in dist"
+	You might encounter this problem while you are using relative path of files just replace relative paths with **absolute paths**.
 
-*csc path not found*: In linux and macos you will get this error, fix this error by adding **--cscpath csc** flag in build command.
+!!! error "Error: csc path not found"
+	In linux and macos you will get this error, fix this error by adding **--cscpath csc** flag in build command.

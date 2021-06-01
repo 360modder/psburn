@@ -58,5 +58,5 @@ greet -h
 	  -h, --help                   show this help message and exit
 
 	examples:
-	        greet.exe --cat > final.ps1
+	        greet.exe --cat > greet.ps1
 	```
