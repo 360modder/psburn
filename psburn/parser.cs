@@ -183,10 +183,13 @@ namespace PowershellFeatures
 
                     ExamplesString = $"{ParsedJson.examples}";
 
-                    if (ExamplesString == "" && Verbose)
+                    if (ExamplesString == "")
                     {
-                        Utils.PrintColoredText("info: ", ConsoleColor.Blue);
-                        Console.WriteLine("parser examples not set, program will have default examples.");
+                        if (Verbose)
+                        {
+                            Utils.PrintColoredText("info: ", ConsoleColor.Blue);
+                            Console.WriteLine("parser examples not set, program will have default examples.");
+                        }
                     }
 
                     else
