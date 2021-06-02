@@ -1,6 +1,6 @@
 # Creating Self Contained Executable
 
-psburn can also build self contained executables, means that you need not to install powershell on every system. For making self contained executables the main recipe is zip which contains os specific powershell binaries.
+psburn can also build self contained executables, means that you need not to install powershell on every system. For making self contained executables the main recipe is zip file which contains os specific powershell binaries.
 
 ## Preparing A Zip
 

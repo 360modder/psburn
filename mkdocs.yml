@@ -65,3 +65,4 @@ nav:
     - Argparse Integration: gettingstarted/argparseintegration.md
   - Usages:
     - Creating Self Contained Executable: usages/creatingselfcontainedexecutable.md
+    - Embedding Resources: usages/embeddingresources.md
