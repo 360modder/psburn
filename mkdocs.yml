@@ -63,6 +63,8 @@ nav:
     - Workflow: gettingstarted/workflow.md
     - Compiling Powershell Scripts: gettingstarted/compilingpsscripts.md
     - Argparse Integration: gettingstarted/argparseintegration.md
-  - Usages:
-    - Creating Self Contained Executable: usages/creatingselfcontainedexecutable.md
-    - Embedding Resources: usages/embeddingresources.md
+  - Usage:
+    - Creating Self Contained Executable: usage/creatingselfcontainedexecutable.md
+    - Embedding Resources:
+      - usage/embeddingresources/embeddingresources.md
+      - Invoke Sub Scripts: usage/embeddingresources/invokesubscripts.md

@@ -198,7 +198,7 @@ for Argument, Value in ParsedArgparseArguments._get_kwargs():
 AllArguments = " ".join(sys.argv)
 
 
-def PowershellCodeGenerator(Arguments, ArgumentsType=ArgumentsType, DestForArgument=DestForArgument, ParsedArgparseArgumentsDictionary=ParsedArgparseArgumentsDictionary):
+def PowershellCodeGenerator(Arguments, DestForArgument, ArgumentsType=ArgumentsType, ParsedArgparseArgumentsDictionary=ParsedArgparseArgumentsDictionary):
 	PSEmbedString = ""
 
 	if ArgumentsType[Arguments] == "bool":
@@ -216,7 +216,7 @@ def PowershellCodeGenerator(Arguments, ArgumentsType=ArgumentsType, DestForArgum
 
 for PostionalArg in PostionalArguments:
 	DestForArgument = PostionalArg.replace("-", "")
-	PSEmbedString += PowershellCodeGenerator(PostionalArg, DestForArgument=DestForArgument)
+	PSEmbedString += PowershellCodeGenerator(PostionalArg, DestForArgument)
 
 for OptionalArg in OptionalArguments:
 
@@ -224,11 +224,11 @@ for OptionalArg in OptionalArguments:
 
 	if OptionalArg in ArgumentsAlias.keys():
 		if f"--{OptionalArg}" in AllArguments or f"-{ArgumentsAlias[OptionalArg]}" in AllArguments:
-			PSEmbedString += PowershellCodeGenerator(OptionalArg, DestForArgument=DestForArgument)
+			PSEmbedString += PowershellCodeGenerator(OptionalArg, DestForArgument)
 
 	else:
 		if f"--{OptionalArg}" in AllArguments:
-			PSEmbedString += PowershellCodeGenerator(OptionalArg, DestForArgument=DestForArgument)
+			PSEmbedString += PowershellCodeGenerator(OptionalArg, DestForArgument)
 
 # Final merge of orginal powershell script with genrated parsed variables
 PSEmbedString += "\n" + PSScriptFile
@@ -245,13 +245,6 @@ if ParsedArgparseArguments.cat:
 # Creating unique temporary directory
 StorageDirectory = resource_path("")
 
-# Writting a dynamic powershell script to temporary path
-TempScriptPath = os.path.join(StorageDirectory, "temp.ps1")
-PSEmbedString = f"$PSScriptTempRoot = '{StorageDirectory}'\n" + PSEmbedString;
-
-with open(TempScriptPath, "w", encoding="utf-8") as f:
-	f.write(PSEmbedString)
-
 # Self contained specific checks
 OneDir = False # will come
 OneFile = True if OneDir == False else False
@@ -264,6 +257,14 @@ Executable = os.path.join(StorageDirectory, "pwsh", Executable) if OneFile else 
 
 if os.path.exists(Executable) is not True:
 	Executable = "powershell.exe" if IsWindows else "pwsh"
+
+# Writting a dynamic powershell script to temporary path
+TempScriptPath = os.path.join(StorageDirectory, "temp.ps1")
+PSEmbedString = f"$PSScriptTempRoot = '{StorageDirectory}'\n" + PSEmbedString;
+PSEmbedString = f"$Executable = '{Executable}'\n" + PSEmbedString;
+
+with open(TempScriptPath, "w", encoding="utf-8") as f:
+	f.write(PSEmbedString)
 
 # Final call to powershell
 subprocess.run([Executable, "-ExecutionPolicy", ExPolicy, "-File", TempScriptPath])

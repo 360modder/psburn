@@ -458,6 +458,10 @@ namespace PsburnPowershellScript
                 Executable = Utils.IsWindows ? "powershell.exe" : "pwsh";
             }
 
+            // More variables
+            PSEmbedString = string.Format("$PSScriptTempRoot = '{0}'\n", PSScriptRoot) + PSEmbedString;
+            PSEmbedString = string.Format("$Executable = '{0}'\n", Executable) + PSEmbedString;
+
             // Final call to powershell
             Utils.RunSubprocess(Executable, string.Format("-ExecutionPolicy {0} -Command \"{1}\"", ExPolicy, PSEmbedString));
         }

@@ -350,10 +350,12 @@ namespace Psburn
             {
                 Utils.EmbeddedFileSave("psburn.assets.ICSharpCode.SharpZipLib.dll", "dist/ICSharpCode.SharpZipLib.dll");
 
-                cscargs += $"/reference:\"dist/ICSharpCode.SharpZipLib.dll\" /resource:\"{psscript}\",{ScriptEmbeddedPath} ";
+                cscargs += $"/reference:\"dist/ICSharpCode.SharpZipLib.dll\" /resource:\"{Path.GetFullPath(psscript)}\",{ScriptEmbeddedPath} ";
 
                 if (powershellzip != "no zip" && onedir)
                 {
+                    powershellzip = Path.GetFullPath(powershellzip);
+
                     Utils.PrintColoredText("info: ", ConsoleColor.Blue);
                     Console.WriteLine($"extracting {powershellzip}");
 
@@ -367,10 +369,17 @@ namespace Psburn
                         }
                     }
                 }
-                else if (powershellzip != "no zip") { cscargs += $"/resource:\"{powershellzip}\",{PowershellZipEmbeddedPath} "; }
+
+                else if (powershellzip != "no zip")
+                {
+                    powershellzip = Path.GetFullPath(powershellzip);
+                    cscargs += $"/resource:\"{powershellzip}\",{PowershellZipEmbeddedPath} ";
+                }
 
                 if (resourceszip != "no zip" && onedir)
                 {
+                    resourceszip = Path.GetFullPath(resourceszip);
+
                     Utils.PrintColoredText("info: ", ConsoleColor.Blue);
                     Console.WriteLine($"extracting {powershellzip}");
 
@@ -384,10 +393,15 @@ namespace Psburn
                         }
                     }
                 }
-                else if (resourceszip != "no zip") { cscargs += $"/resource:\"{resourceszip}\",{ResourcesZipEmbeddedPath} "; }
+
+                else if (resourceszip != "no zip")
+                {
+                    resourceszip = Path.GetFullPath(resourceszip);
+                    cscargs += $"/resource:\"{resourceszip}\",{ResourcesZipEmbeddedPath} ";
+                }
             }
 
-            if (icon != "no icon") { cscargs += $"/win32icon:\"{icon}\" "; }
+            if (icon != "no icon") { cscargs += $"/win32icon:\"{Path.GetFullPath(icon)}\" "; }
             if (noconsole) { cscargs += "/target:winexe "; }
             if (uacadmin)
             {
@@ -436,7 +450,7 @@ namespace Psburn
             // Generating args for pyinstaller
             string PyInstallerArgs = $"{Path.GetFileName(pyscript)} --onefile ";
 
-            PyInstallerArgs += $"--add-data \"{psscript}{Separator}.\" ";
+            PyInstallerArgs += $"--add-data \"{Path.GetFullPath(psscript)}{Separator}.\" ";
 
             if (powershellzip != "no zip")
             {

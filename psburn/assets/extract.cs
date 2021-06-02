@@ -510,11 +510,6 @@ namespace PsburnPowershellScript
                 Environment.Exit(1);
             }
 
-            // Writting a dynamic powershell script to temporary path
-            string TempScriptPath = Path.Combine(StorageDirectory, FileBaseName + ".ps1");
-            PSEmbedString = string.Format("$PSScriptTempRoot = '{0}'\n", StorageDirectory) + PSEmbedString;
-            File.WriteAllText(TempScriptPath, PSEmbedString);
-
             // Self contained specific checks
             bool OneDir = false; // will come
             bool OneFile = true;
@@ -573,6 +568,12 @@ namespace PsburnPowershellScript
             {
                 Executable = Utils.IsWindows ? "powershell.exe" : "pwsh";
             }
+
+            // Writting a dynamic powershell script to temporary path
+            string TempScriptPath = Path.Combine(StorageDirectory, FileBaseName + ".ps1");
+            PSEmbedString = string.Format("$PSScriptTempRoot = '{0}'\n", StorageDirectory) + PSEmbedString;
+            PSEmbedString = string.Format("$Executable = '{0}'\n", Executable) + PSEmbedString;
+            File.WriteAllText(TempScriptPath, PSEmbedString);
 
             // Final call to powershell
             Utils.RunSubprocess(Executable, string.Format("-ExecutionPolicy {0} -File \"{1}\"", ExPolicy, TempScriptPath));

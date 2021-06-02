@@ -15,15 +15,20 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 	### Installations from powershell
 
 	Download the zipped binary.
+
 	```ps1
 	Invoke-WebRequest https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-win.zip -o psburn-1.0.0-win.zip
 	```
+	
 	Extract zipped binary and remove zip file.
+
 	```ps1
 	Expand-Archive .\psburn-1.0.0-win.zip .
 	Remove-Item psburn-1.0.0-win.zip
 	```
+
 	Setup temporary envoirnment variables.
+
 	```ps1
 	$env:Path = "psburn-1.0.0-win/bin;$env:Path"
 	```
@@ -33,33 +38,41 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 	### Installations from terminal
 
 	Download the zipped binary.
+
 	```shell
 	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-linux.zip
 	```
+
 	Extract zipped binary and remove zip file.
+
 	```shell
 	unzip psburn-1.0.0-linux.zip
 	rm psburn-1.0.0-linux.zip
 	```
+
 	Export temporary path for executables.
+
 	```shell
 	export PATH=$PATH/bin:psburn-1.0.0-linux/bin
 	```
 
 === "MacOS"
 
-	### Installations from terminal
-
 	Download the zipped binary.
+
 	```shell
 	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-osx.zip
 	```
+
 	Extract zipped binary and remove zip file.
+
 	```shell
 	unzip psburn-1.0.0-osx.zip
 	rm psburn-1.0.0-osx.zip
 	```
+
 	Export temporary path for executables.
+
 	```shell
 	export PATH=$PATH/bin:psburn-1.0.0-osx/bin
 	```
@@ -70,7 +83,7 @@ Building envoirnments are necessary to build a executable out a file using psbur
 
 === "Python"
 
-	[python3.6+](https://www.python.org/) and [pip](https://pip.pypa.io/en/stable/installing/) should be also installed if you are using **cross** command then install pyinstaller.
+	[python3.6+](https://www.python.org/) and [pip](https://pip.pypa.io/en/stable/installing/) should be installed if you are using **cross** command then install pyinstaller.
 
 	```shell
 	pip install pyinstaller
