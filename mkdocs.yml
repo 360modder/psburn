@@ -68,3 +68,5 @@ nav:
     - Embedding Resources:
       - usage/embeddingresources/embeddingresources.md
       - Invoke Sub Scripts: usage/embeddingresources/invokesubscripts.md
+  - PsBurn:
+    - Create: psburn/create.md

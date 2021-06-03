@@ -5,7 +5,7 @@ You can also invoke multiple sub scripts from a single executable by using **$Ex
 
 ## Test
 
-Create directoray structure like this.
+Create directorary structure like this.
 
 ```
 app.ps1			# main psscript
