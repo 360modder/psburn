@@ -1,6 +1,6 @@
 # Invoke Sub Scripts
 
-You can also invoke multiple subscripts from a single executable by using **$Executable** in your powershell script which stores the path for powershell executable.
+You can also invoke multiple sub scripts from a single executable by using **$Executable** in your powershell script which stores the path for powershell executable.
 
 
 ## Test
@@ -19,26 +19,25 @@ Contents of scripts.
 === "app.ps1"
 
 	```ps1
-	Write-Output "Launching Up..."
-
-	# Path Fetching Function
 	function resource_path([string]$resourcefile) {
 	    Join-Path $PSScriptTempRoot $resourcefile
 	}
 
-	# Fetch Paths
+	Write-Output "Launching Up..."
+
 	$resourcefileSetup = resource_path("resources/setup.ps1")
 	$resourcefileClean = resource_path("resources/clean.ps1")
 
-	# Run Scripts
-	Start-Process -FilePath $Executable -ArgumentList "-ExecutionPolicy Bypass -File `"$resourcefileSetup`"" -NoNewWindow -Wait
-	Start-Process -FilePath $Executable -ArgumentList "-ExecutionPolicy Bypass -File `"$resourcefileClean`"" -NoNewWindow -Wait
+	. $resourcefileSetup -Id "1.2.3"
+	. $resourcefileClean
 	```
 
 === "setup.ps1"
 
 	```ps1
-	Write-Output "Setting Up..."
+	param($Id)
+
+	Write-Output "$Id Setting Up..."
 	```
 
 === "clean.ps1"
@@ -67,6 +66,6 @@ Now if you run compiled executable, you will see this output.
 
 ```
 Launching Up...
-Setting Up...
+1.2.3 Setting Up...
 Cleaning Up...
 ```

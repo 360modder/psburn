@@ -12,8 +12,6 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 
 === "Windows"
 
-	### Installations from powershell
-
 	Download the zipped binary.
 
 	```ps1
@@ -34,8 +32,6 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 	```
 
 === "Linux"
-
-	### Installations from terminal
 
 	Download the zipped binary.
 
