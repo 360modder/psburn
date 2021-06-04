@@ -21,7 +21,7 @@ You can [download](https://github.com/PowerShell/PowerShell/releases) the latest
 === "Linux"
 
 	```shell
-	wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell-7.1.3-linux-x64.tar.gz
+	wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell-7.1.3-linux-x64.tar.gz -O powershell-7.1.3-linux-x64.tar.gz
 	```
 
 	After downloading the binary archive you will have to extract all files inside a folder named **pwsh**.
@@ -33,7 +33,7 @@ You can [download](https://github.com/PowerShell/PowerShell/releases) the latest
 === "MacOS"
 
 	```bash
-	wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell-7.1.3-osx-x64.tar.gz
+	wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell-7.1.3-osx-x64.tar.gz -O powershell-7.1.3-osx-x64.tar.gz
 	```
 
 	After downloading the binary archive you will have to extract all files inside a folder named **pwsh**.
@@ -83,4 +83,4 @@ Now compress this directory into a zip file.
 	```
 
 !!! note
-	Use **--onedir** flag for faster booting of compiled scripts.
+	Use **--onedir** flag in all commands for faster booting of compiled scripts.

@@ -5,7 +5,7 @@
 </p>
 
 
-<p align="center">psburn is cross platform tool to compile dynamic powershell scripts into platform specific executables by encapsulating it inside a c# or python program.</p>
+<p align="center">psburn is cross platform tool to compile dynamic powershell scripts into platform specific executables by encapsulating it inside a python or c# program.</p>
 
 <p align="center">
   <button class="md-button md-button--primary" onclick="location.href = 'gettingstarted/installations/';">Quick Start</button>

@@ -2,7 +2,7 @@
 
 psburn can embed resources to your powershell script. You just need to place all files inside one directory and you can access the path to those files by using **$PSScriptRoot** or **$PSScriptTempRoot**.
 
-Suppose you created a directoray structure like this and message.txt is the resource file whose path you want.
+Suppose you created a directory structure like this and message.txt is the resource file whose path you want.
 
 ```
 resources/

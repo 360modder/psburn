@@ -18,6 +18,5 @@ You can understand the psburn commands toolchain from the below diagram.
 
 ![PsBurn Workflow](../assets/mermaid-diagram-20210531105847.svg)
 
-## What happens during executing compiled powershell script ?
-
-Since psburn doesn't actually compile powershell script it stores a copy of powershell script inside it as embedded resource and extract this script to a temporary directory and run it from there.
+!!! question "What happens during executing compiled powershell script ?"
+	Since psburn doesn't actually compile powershell script it stores a copy of powershell script inside it as embedded resource and extract this script to a temporary directory and run it from there.

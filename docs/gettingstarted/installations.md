@@ -36,7 +36,7 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 	Download the zipped binary.
 
 	```shell
-	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-linux.zip
+	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-linux.zip -O psburn-1.0.0-linux.zip
 	```
 
 	Extract zipped binary and remove zip file.
@@ -57,7 +57,7 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 	Download the zipped binary.
 
 	```shell
-	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-osx.zip
+	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-osx.zip -O psburn-1.0.0-osx.zip
 	```
 
 	Extract zipped binary and remove zip file.
