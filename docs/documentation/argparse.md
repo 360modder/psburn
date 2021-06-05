@@ -1,8 +1,6 @@
 # Argparse
 
-psburn has a feature called argparse integration which allows to integrate argparse to powershell scripts. Learn argparse integration basic understanding and example from [here](/gettingstarted/argparseintegration/).
-
-
+psburn has a feature called argparse integration which allows to integrate argparse to powershell scripts. Learn argparse integration basic understanding and example from [here](/psburn/gettingstarted/argparseintegration/).
 
 ## #@parser
 
@@ -14,11 +12,11 @@ psburn has a feature called argparse integration which allows to integrate argpa
 
 ### Properties
 
-| Key         | Type       | Values | Variables                       |
-|-------------|------------|--------|---------------------------------|
-| description | string     |        | $newline                        |
-| usage       | string     |        |                                 |
-| examples    | list/array |        | $file_base_name, $double_qoutes |
+| Key         | Type       | Variables                       |
+|-------------|------------|---------------------------------|
+| description | string     | $newline                        |
+| usage       | string     |                                 |
+| examples    | list/array | $file_base_name, $double_qoutes |
 
 !!! note
 	**Variables** can be used inside strings which will be parsed later on.
@@ -45,3 +43,6 @@ psburn has a feature called argparse integration which allows to integrate argpa
 
 !!! note
 	If **Values** cell is blank it means any value can be assigned.
+
+!!! warning
+	hyphens are not supported in **variable** instead use underscore.

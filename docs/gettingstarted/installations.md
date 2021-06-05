@@ -15,20 +15,20 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 	Download the zipped binary.
 
 	```ps1
-	Invoke-WebRequest https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-win.zip -o psburn-1.0.0-win.zip
+	Invoke-WebRequest https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-win-x64.zip -o psburn-1.0.0-win-x64.zip
 	```
 	
 	Extract zipped binary and remove zip file.
 
 	```ps1
-	Expand-Archive .\psburn-1.0.0-win.zip .
-	Remove-Item psburn-1.0.0-win.zip
+	Expand-Archive .\psburn-1.0.0-win-x64.zip .
+	Remove-Item psburn-1.0.0-win-x64.zip
 	```
 
 	Setup temporary envoirnment variables.
 
 	```ps1
-	$env:Path = "psburn-1.0.0-win/bin;$env:Path"
+	$env:Path = "psburn-1.0.0-win-x64/bin;$env:Path"
 	```
 
 === "Linux"
@@ -36,20 +36,20 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 	Download the zipped binary.
 
 	```shell
-	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-linux.zip -O psburn-1.0.0-linux.zip
+	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-linux-x64.zip -O psburn-1.0.0-linux-x64.zip
 	```
 
 	Extract zipped binary and remove zip file.
 
 	```shell
-	unzip psburn-1.0.0-linux.zip
-	rm psburn-1.0.0-linux.zip
+	unzip psburn-1.0.0-linux-x64.zip
+	rm psburn-1.0.0-linux-x64.zip
 	```
 
 	Export temporary path for executables.
 
 	```shell
-	export PATH=$PATH/bin:psburn-1.0.0-linux/bin
+	export PATH=$PATH/bin:psburn-1.0.0-linux-x64/bin
 	```
 
 === "MacOS"
@@ -57,20 +57,20 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 	Download the zipped binary.
 
 	```shell
-	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-osx.zip -O psburn-1.0.0-osx.zip
+	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-osx-x64.zip -O psburn-1.0.0-osx-x64.zip
 	```
 
 	Extract zipped binary and remove zip file.
 
 	```shell
-	unzip psburn-1.0.0-osx.zip
-	rm psburn-1.0.0-osx.zip
+	unzip psburn-1.0.0-osx-x64.zip
+	rm psburn-1.0.0-osx-x64.zip
 	```
 
 	Export temporary path for executables.
 
 	```shell
-	export PATH=$PATH/bin:psburn-1.0.0-osx/bin
+	export PATH=$PATH/bin:psburn-1.0.0-osx-x64/bin
 	```
 
 ## Building Envoirnments
@@ -87,4 +87,4 @@ Building envoirnments are necessary to build a executable out a file using psbur
 
 === "C#"
 
-	Windows does't require any C# envoirnment as its come integrated with .NET Framework but on linux and macos a compitible version of [mono](https://www.mono-project.com/download/stable/) should be installed if you are using **create** command.
+	Windows does't require any C# envoirnment as its come integrated with .NET Framework but on linux and macos a compatible version of [mono](https://www.mono-project.com/download/stable/) should be installed if you are using **create** command.

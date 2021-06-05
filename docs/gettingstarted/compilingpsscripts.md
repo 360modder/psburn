@@ -32,7 +32,7 @@ If you are on *windows* then c# commands works without any dependencies, means y
 	psburn build path/to/generated/script.cs path/to/script.ps1
 	```
 
-Your powershell script will be compiled under dist folder of working directory.
+Your powershell script will be compiled under dist folder of working directory. Use [mkbundle](https://www.mono-project.com/docs/tools+libraries/tools/mkbundle/) to bundle exe if you are using mono.
 
 ## Access more options with cbuild command
 

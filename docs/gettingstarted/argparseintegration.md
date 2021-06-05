@@ -4,7 +4,7 @@ psburn can easily integrate argparse to your powershell script. python's argpars
 
 ## Syntax
 
-Integrating argparse is very simple, you just have to implement little syntax in your powershell script. Learn more about syntax and properties from [here](/documentation/argparse/).
+Integrating argparse is very simple, you just have to implement little syntax in your powershell script. Learn more about syntax and properties from [here](/psburn/documentation/argparse/).
 
 ```ps1
 #@parser {description: "gretting program"}
@@ -45,7 +45,7 @@ greet -h
 === "C#"
 
 	```
-	usage: greet.exe [-h] [--cat] [-n NAME] [-t]
+	usage: greet [-h] [--cat] [-n NAME] [-t]
 
 	gretting program
 
@@ -56,7 +56,4 @@ greet -h
 	  -t, --two                    greet person two times (default: false)
 	  --cat                        instead of running cat powershell script into console (default: false)
 	  -h, --help                   show this help message and exit
-
-	examples:
-	        greet.exe --cat > greet.ps1
 	```
