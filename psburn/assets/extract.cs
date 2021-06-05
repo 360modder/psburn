@@ -313,7 +313,7 @@ namespace PsburnPowershellScript
             string[] HelpArgumentsTexts = { }; // will come
             string[] AllExamples = { }; // will come
 
-            string ProgramUsage = string.Format("usage: {0} [-h] [--cat] ", PSScriptName);
+            string ProgramUsage = string.Format("usage: {0} [-h] [--cat] ", PSScriptName.Replace(".exe", ""));
 
             foreach (string Argument in ArgumentsType.Keys)
             {
@@ -347,10 +347,9 @@ namespace PsburnPowershellScript
                     foreach (string line in HelpArgumentsTexts) { Console.WriteLine(line); }
                     if (HelpArgumentsTexts.Length == 0) { Console.WriteLine("postional arguments:"); }
                     Console.WriteLine(string.Format("  {0,-28} {1}", "--cat", "instead of running cat powershell script into console (default: false)"));
-                    Console.WriteLine(string.Format("  {0,-28} {1}\n", "-h, --help", "show this help message and exit"));
+                    Console.Write(string.Format("  {0,-28} {1}\n", "-h, --help", "show this help message and exit"));
 
-                    Console.WriteLine(string.Format("examples:\n\t{0}.exe --cat > {0}.ps1", Path.GetFileNameWithoutExtension(PSScriptName)));
-
+                    if (AllExamples.Length != 0) { Console.WriteLine("\nexamples:"); }
                     foreach (string line in AllExamples)
                     {
                         string ExampleLine;
