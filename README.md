@@ -6,6 +6,25 @@
 
 psburn is cross platform tool to compile dynamic powershell scripts into platform specific executables by encapsulating it inside a c# or python program.
 
+# Installation
+
+- Ubuntu 18.04/20.04
+
+Add psburn's repository to your system.
+
+```bash
+curl -s https://packagecloud.io/install/repositories/360modder/psburn/script.deb.sh | sudo bash
+sudo apt-get update
+```
+
+Install psburn from psburn's repository.
+
+```bash
+sudo apt-get install psburn
+```
+
+- For other platforms releasing soon
+
 # Building from source
 
 You can build psburn release binaries from source, follow the following instructions.
@@ -20,8 +39,9 @@ Clone the psburn github repository.
 git clone https://github.com/360modder/psburn.git
 ```
 
-Now runt release.sh from psburn/release
+Now execute release.sh from psburn/release
 
 ```bash
-cd psburn/release && ./release.sh
+cd psburn/release
+chmod +x release.sh && ./release.sh
 ```
