@@ -1,1 +1,1 @@
-dotnet publish -r win-x64 -c Release -p:PublishTrimmed=true -p:PublishSingleFile=true
+dotnet publish -r win-x64 -c Release -p:PublishTrimmed=true
