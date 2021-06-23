@@ -1,90 +1,119 @@
 # Installations
 
-Since psburn is a cross platform tool, its binaries are distributed for windows, linux and macos. Binaries are compressed inside a *zip* file. You can either click the below download buttons or use curl command to download it from terminal.
-
-## Direct Download
-
-[Windows :material-microsoft-windows:](#){ .md-button .md-button--primary }
-[Linux :material-linux:](#){ .md-button .md-button--primary }
-[MacOS :material-apple:](#){ .md-button .md-button--primary }
-
-## Command Line Installations
-
-=== "Windows"
-
-	Download the zipped binary.
-
-	```ps1
-	Invoke-WebRequest https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-win-x64.zip -o psburn-1.0.0-win-x64.zip
-	```
-	
-	Extract zipped binary and remove zip file.
-
-	```ps1
-	Expand-Archive .\psburn-1.0.0-win-x64.zip .
-	Remove-Item psburn-1.0.0-win-x64.zip
-	```
-
-	Setup temporary envoirnment variables.
-
-	```ps1
-	$env:Path = "psburn-1.0.0-win-x64/bin;$env:Path"
-	```
-
-=== "Linux"
-
-	Download the zipped binary.
-
-	```shell
-	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-linux-x64.zip -O psburn-1.0.0-linux-x64.zip
-	```
-
-	Extract zipped binary and remove zip file.
-
-	```shell
-	unzip psburn-1.0.0-linux-x64.zip
-	rm psburn-1.0.0-linux-x64.zip
-	```
-
-	Export temporary path for executables.
-
-	```shell
-	export PATH=$PATH/bin:psburn-1.0.0-linux-x64/bin
-	```
-
-=== "MacOS"
-
-	Download the zipped binary.
-
-	```shell
-	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn-1.0.0-osx-x64.zip -O psburn-1.0.0-osx-x64.zip
-	```
-
-	Extract zipped binary and remove zip file.
-
-	```shell
-	unzip psburn-1.0.0-osx-x64.zip
-	rm psburn-1.0.0-osx-x64.zip
-	```
-
-	Export temporary path for executables.
-
-	```shell
-	export PATH=$PATH/bin:psburn-1.0.0-osx-x64/bin
-	```
+Since psburn is a cross platform tool, its binaries are distributed for windows, linux and macos. Binaries are compressed inside a *zip* or *tarball* file. You first need to choose a building envoirnment mentioned below. Then you can install psburn package or binary archive to your system.
 
 ## Building Envoirnments
 
-Building envoirnments are necessary to build a executable out a file using psburn. Choose one such envoirnment from python or c#.
+Building envoirnments are necessary to build a executable out a file using psburn. Choose one such envoirnment from python or c#. python envoirnment is recommended on linux and macos and c# on windows. 
 
 === "Python"
 
 	[python3.6+](https://www.python.org/) and [pip](https://pip.pypa.io/en/stable/installing/) should be installed if you are using **cross** command then install pyinstaller.
 
-	```shell
+	```bash
 	pip install pyinstaller
 	```
 
 === "C#"
 
 	Windows does't require any C# envoirnment as its come integrated with .NET Framework but on linux and macos a compatible version of [mono](https://www.mono-project.com/download/stable/) should be installed if you are using **create** command.
+
+
+## Download
+
+Download psburn packages and binary archives as per your platform.
+
+[Windows :material-microsoft-windows:](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.win-x64.exe){ .md-button .md-button--primary }
+[Linux :material-linux:](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.linux-x64.tar.gz){ .md-button .md-button--primary }
+[MacOS :material-apple:](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.osx-x64.tar.gz){ .md-button .md-button--primary }
+
+## Packages
+
+The two packages have been created to install psburn on linux machines.
+
+=== "Debian"
+	
+	```bash
+	# Download debian package
+	wget https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.linux-x64.deb -O psburn.1.0.0.linux-x64.deb
+
+	# Install debian package
+	sudo dpkg -i psburn.1.0.0.linux-x64.deb
+	sudo apt-get install -f
+
+	# Uninstall debian package
+	# sudo apt-get remove psburn
+	```
+
+=== "Red Hat"
+
+	```bash
+	# Install rpm package
+	sudo yum install https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.linux-x64.rpm
+
+	# Uninstall rpm package
+	# sudo yum remove psburn
+	```
+
+## Binary Archives
+
+Binary archives installations steps on windows, linux and macos.
+
+=== "Windows"
+
+	```ps1
+	# Replace win-x64 to win-x86 to install 32-bit version
+
+	# Download the zipped binary
+	Invoke-WebRequest https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.win-x64.zip -o psburn.1.0.0.win-x64.zip
+
+	# Extract zipped binary
+	Expand-Archive .\psburn.1.0.0.win-x64.zip psburn.1.0.0.win-x64
+
+	# Setup path envoirnment variables
+	$env:Path = "psburn.1.0.0.win-x64;$env:Path"
+	```
+
+=== "Linux"
+
+	```bash
+	# Download the psburn '.tar.gz' archive
+	curl -L -o /tmp/psburn.tar.gz https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.linux-x64.tar.gz
+
+	# Create the target folder where psburn will be placed
+	sudo mkdir -p /opt/360modder/psburn
+
+	# Expand psburn to the target folder
+	sudo tar zxf /tmp/psburn.tar.gz -C /opt/360modder/psburn
+
+	# Set execute permissions
+	sudo chmod +x /opt/360modder/psburn/psburn
+
+	# Create the symbolic link that points to psburn
+	sudo ln -s /opt/360modder/psburn/psburn /usr/bin/psburn
+
+	# Uninstall binary archive
+	# sudo rm -rf /usr/bin/psburn/psburn /opt/360modder/psburn
+	```
+
+=== "MacOS"
+
+	```bash
+	# Download the psburn '.tar.gz' archive
+	curl -L -o /tmp/psburn.tar.gz https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.osx-x64.tar.gz
+
+	# Create the target folder where psburn will be placed
+	sudo mkdir -p /usr/local/360modder/psburn
+
+	# Expand psburn to the target folder
+	sudo tar zxf /tmp/psburn.tar.gz -C /usr/local/360modder/psburn
+
+	# Set execute permissions
+	sudo chmod +x /usr/local/360modder/psburn/psburn
+
+	# Create the symbolic link that points to psburn
+	sudo ln -s /usr/local/360modder/psburn/psburn /usr/local/bin/psburn
+
+	# Uninstall binary archive
+	# sudo rm -rf /usr/local/bin/psburn /usr/local/360modder/psburn
+	```

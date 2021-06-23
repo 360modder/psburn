@@ -45,7 +45,7 @@ pyinstaller -h
 
 ## Merging dll and exe files
 
-If you use *build* command it generates a dll which is requires by executable to run properly, you can merge this dll and exe using ilmerge or ilrepack.
+If you use *build* command it generates a dll which is requires by executable to run properly, you can merge this dll and exe using [ilmerge](https://github.com/dotnet/ILMerge) or [ilrepack](https://github.com/gluck/il-repack).
 
 === "Windows"
 

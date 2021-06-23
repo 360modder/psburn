@@ -143,6 +143,7 @@ mkdir $release_dir
 
 # Zip Releases
 create_package zip win-x64
+create_package zip win-x86
 # Tarball Releases
 create_package tar.gz linux-x64
 create_package tar.gz osx-x64
