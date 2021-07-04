@@ -51,6 +51,8 @@ psburn build script.cs script.ps1
 
 Your powershell script will be compiled under dist folder of working directory. [Learn More](https://360modder.github.io/psburn/gettingstarted/compilingpsscripts/)
 
+For creating gui applications checkout [quickstart-ps-gui](https://github.com/360modder/quickstart-ps-gui).
+
 ## Building From Source
 
 You can build psburn release binaries from source by following the given instructions.

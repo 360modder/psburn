@@ -68,6 +68,7 @@ nav:
       - usage/embeddingresources/embeddingresources.md
       - Invoke Sub Scripts: usage/embeddingresources/invokesubscripts.md
     - No Extract: usage/noextract.md
+    - Gui Applications: usage/guiapps.md
   - Documentation:
     - Python:
       - Cross: documentation/python/cross.md
