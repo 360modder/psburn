@@ -20,7 +20,7 @@ build is a toolchain for building executables with c# and powershell scripts.
 
 ## Shell
 
-```shell
+```bash
 psburn build -h
 ```
 

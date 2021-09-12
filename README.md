@@ -1,4 +1,4 @@
-# PsBurn - Powershell Compiler
+# PsBurn - Powershell Script Packager
 
 <p align="center">
   <img src="docs/images/favicon.png" width="200"  height="200"/>
@@ -13,7 +13,7 @@
   </a>
 </p>
 
-psburn is cross platform tool to compile dynamic powershell scripts into platform specific executables by encapsulating it inside a python or c# program.
+psburn is tool to package powershell scripts into executables by encapsulating it inside a python or c# program.
 
 Vist psburn's [website](https://360modder.github.io/psburn/) for more details.
 
@@ -40,24 +40,40 @@ To install a specific version, visit [releases](https://github.com/360modder/psb
 [binary-archives]: https://360modder.github.io/psburn/gettingstarted/installations/#binary-archives
 [packages]: https://360modder.github.io/psburn/gettingstarted/installations/#packages
 
-## Basic Usage (Windows)
+## Usage
 
-Build an executable from script.ps1
+Following commands are in reference of powershell script named **script.ps1**
+
+- Windows
 
 ```bash
 psburn create script.ps1 -o script.cs
 psburn build script.cs script.ps1
 ```
 
-Your powershell script will be compiled under dist folder of working directory. [Learn More](https://360modder.github.io/psburn/gettingstarted/compilingpsscripts/)
+- Linux/MacOS
 
-For creating gui applications checkout [quickstart-ps-gui](https://github.com/360modder/quickstart-ps-gui).
+```bash
+psburn cross script.ps1 -o script.py
+psburn cbuild script.py script.ps1 --no-prompt
+```
+
+Your powershell script will be packaged under dist folder of working directory. [Learn More](https://360modder.github.io/psburn/gettingstarted/packagepsscripts/)
+
+## Quick Links
+
+- [Package Powershell Scripts](https://360modder.github.io/psburn/gettingstarted/packagepsscripts/)
+- [Argparse Integration](https://360modder.github.io/psburn/gettingstarted/argparseintegration/)
+- [Creating Self Contained Executable](https://360modder.github.io/psburn/usage/creatingselfcontainedexecutable/)
+- [No Extract](https://360modder.github.io/psburn/usage/noextract/)
+- [CLI API Documentation](https://360modder.github.io/psburn/documentation/python/cross/)
 
 ## Building From Source
 
 You can build psburn release binaries from source by following the given instructions.
 
 Requires*
+
 - ubuntu-18.04
 - python3.6+
 
@@ -70,6 +86,5 @@ git clone https://github.com/360modder/psburn.git
 Now execute release.sh from psburn/release
 
 ```bash
-cd psburn/release
-chmod +x release.sh && ./release.sh
+cd psburn/release && chmod +x release.sh && ./release.sh
 ```

@@ -308,7 +308,7 @@ namespace PsburnPowershellScript
             string PSScriptName = Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string FileBaseName = Path.GetFileNameWithoutExtension(PSScriptName);
 
-            string ProgramDescription = "dynamically auto compiled embedded powershell command script."; // will come
+            string ProgramDescription = "dynamic embedded powershell script"; // will come
             ProgramDescription = ProgramDescription.Replace("$newline", "\n");
             string[] HelpArgumentsTexts = { }; // will come
             string[] AllExamples = { }; // will come

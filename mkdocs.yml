@@ -2,7 +2,7 @@
 site_name: PsBurn
 site_url: https://360modder.github.io/psburn/
 site_author: 360modder
-site_description: psburn is cross platform tool to compile dynamic powershell scripts into platform specific executables by encapsulating it inside a python or c# program.
+site_description: psburn is cross platform tool to package powershell scripts into executables by encapsulating it inside a python or c# program.
 
 # Repository
 repo_url: https://github.com/360modder/psburn
@@ -60,7 +60,7 @@ nav:
   - Getting Started:
     - Installations: gettingstarted/installations.md
     - Workflow: gettingstarted/workflow.md
-    - Compiling Powershell Scripts: gettingstarted/compilingpsscripts.md
+    - Package Powershell Scripts: gettingstarted/packagepsscripts.md
     - Argparse Integration: gettingstarted/argparseintegration.md
   - Usage:
     - Creating Self Contained Executable: usage/creatingselfcontainedexecutable.md
@@ -68,7 +68,6 @@ nav:
       - usage/embeddingresources/embeddingresources.md
       - Invoke Sub Scripts: usage/embeddingresources/invokesubscripts.md
     - No Extract: usage/noextract.md
-    - Gui Applications: usage/guiapps.md
   - Documentation:
     - Python:
       - Cross: documentation/python/cross.md

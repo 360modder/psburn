@@ -5,7 +5,7 @@ import platform
 import subprocess
 
 
-class DataParser(object):
+class DataParser:
 	
 	def __init__(self, ParsedArguments):
 		self.ParsedArguments = ParsedArguments
@@ -150,7 +150,7 @@ ArgumentsHelp = ParseParametersData.ParseArgumentsHelpDictionary()
 # Program help related texts generations
 FileBaseName = os.path.split(sys.executable)[1].replace(".exe", "")
 
-ProgramDescription = "dynamically auto compiled embedded powershell command script." # will come
+ProgramDescription = "dynamic embedded powershell script" # will come
 ProgramDescription = ProgramDescription.replace("$newline", "\n")
 HelpArgumentsTexts = [] # will come
 AllExamples = [] # will come

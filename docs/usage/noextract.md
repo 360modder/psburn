@@ -2,7 +2,7 @@
 
 no extract is a psburn feature which allows to host powershell script within command mode of powershell. Only c# builds support this feature.
 
-```shell
+```bash
 powershell.exe -C "Write-Output 'Hello World'"
 ```
 
@@ -15,10 +15,11 @@ $test_var = '1.0.0'
 Write-Output "psburn v$test_var launched"
 ```
 
-Now compile script.
+Now package script.
 
-```shell
-psburn create script.ps1 --no-extract -e && psburn build script.cs script.ps1
+```bash
+psburn create script.ps1 -e --no-extract
+psburn build script.cs script.ps1
 ```
 
 If you run *dist/script.exe*, you will see this output.

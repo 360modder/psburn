@@ -1,6 +1,6 @@
 # Cross
 
-create command is used to generate native python code to bind it with powershell script.
+create command is used to generate python code to bind it with powershell script.
 
 | Arguments/Options  | Definitions                                                             |
 |--------------------|-------------------------------------------------------------------------|
@@ -14,7 +14,7 @@ create command is used to generate native python code to bind it with powershell
 
 ## Shell
 
-```shell
+```bash
 psburn cross -h
 ```
 

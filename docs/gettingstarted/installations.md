@@ -8,7 +8,7 @@ Building envoirnments are necessary to build a executable out a file using psbur
 
 === "Python"
 
-	[python3.6+](https://www.python.org/) and [pip](https://pip.pypa.io/en/stable/installing/) should be installed if you are using **cross** command then install pyinstaller.
+	[python3.6+](https://www.python.org/) and [pip](https://pip.pypa.io/en/stable/installing/) should be installed, then install pyinstaller.
 
 	```bash
 	pip install pyinstaller
@@ -16,7 +16,7 @@ Building envoirnments are necessary to build a executable out a file using psbur
 
 === "C#"
 
-	Windows does't require any C# envoirnment as its come integrated with .NET Framework but on linux and macos a compatible version of [mono](https://www.mono-project.com/download/stable/) should be installed if you are using **create** command.
+	Windows does't require any C# envoirnment as it comes integrated with .NET Framework but on linux and macos a compatible version of [mono](https://www.mono-project.com/download/stable/) should be installed.
 
 
 ## Download
@@ -68,7 +68,7 @@ Binary archives installations steps on windows, linux and macos.
 	Invoke-WebRequest https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.win-x64.zip -o psburn.1.0.0.win-x64.zip
 
 	# Extract zipped binary
-	Expand-Archive .\psburn.1.0.0.win-x64.zip psburn.1.0.0.win-x64
+	Expand-Archive psburn.1.0.0.win-x64.zip psburn.1.0.0.win-x64
 
 	# Setup path envoirnment variables
 	$env:Path = "psburn.1.0.0.win-x64;$env:Path"

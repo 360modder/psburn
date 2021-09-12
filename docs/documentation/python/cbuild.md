@@ -17,7 +17,7 @@ cbuild is a toolchain for building executables with python and powershell script
 
 ## Shell
 
-```shell
+```bash
 psburn cbuild -h
 ```
 

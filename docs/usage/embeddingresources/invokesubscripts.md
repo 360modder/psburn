@@ -2,7 +2,6 @@
 
 You can also invoke multiple sub scripts from a single executable by using **$Executable** in your powershell script which stores the path for powershell executable.
 
-
 ## Test
 
 Create directory structure like this.
@@ -50,14 +49,14 @@ Now compress this resources directory to a zip file and build the executable.
 
 === "Python"
 
-	```shell
+	```bash
 	psburn cross app.ps1 -o app.py
 	psburn cbuild app.py app.ps1 -r resources.zip --no-prompt
 	```
 
 === "C#"
 
-	```shell
+	```bash
 	psburn create app.ps1 -o app.cs --embed-resources
 	psburn build app.cs app.ps1 -r resources.zip
 	```

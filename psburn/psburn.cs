@@ -9,7 +9,7 @@ namespace Psburn
         public static int Main(string[] args)
         {
             // Root Command (psburn)
-            var RootCommand = new RootCommand("psburn is cross platform tool to compile dynamic powershell scripts into platform specific executables " +
+            var RootCommand = new RootCommand("psburn is a tool to package powershell scripts into executables " +
                                               "by encapsulating it inside a c# or python program.");
 
             // Global Options

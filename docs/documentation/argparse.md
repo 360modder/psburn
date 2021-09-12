@@ -1,8 +1,13 @@
 # Argparse
 
-psburn has a feature called argparse integration which allows to integrate argparse to powershell scripts. Learn argparse integration basic understanding and example from [here](/psburn/gettingstarted/argparseintegration/).
+psburn has a feature called argparse integration which allows to integrate argparse to powershell scripts. Also check this [example](/psburn/gettingstarted/argparseintegration/).
+
+!!! note
+	All #@ descriptors should be in one line.
 
 ## #@parser
+
+Base descriptor for program.
 
 ### Syntax
 
@@ -23,6 +28,8 @@ psburn has a feature called argparse integration which allows to integrate argpa
 	Python builds doesn't support Variables.
 
 ## #@param
+
+Arguments and parameter descriptor for program.
 
 ### Syntax
 

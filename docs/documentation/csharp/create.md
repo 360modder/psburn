@@ -1,6 +1,6 @@
 # Create
 
-create command is used to generate native c# code to bind it with powershell script.
+create command is used to generate c# code to bind it with powershell script.
 
 | Arguments/Options  | Definitions                                                               |
 |--------------------|---------------------------------------------------------------------------|
@@ -20,7 +20,7 @@ create command is used to generate native c# code to bind it with powershell scr
 
 ## Shell
 
-```shell
+```bash
 psburn create -h
 ```
 
