@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using Psburn;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 
-namespace PowershellFeatures
+namespace Psburn
 {
     /// <summary>
     /// Class for parsing json data coming from powershell script

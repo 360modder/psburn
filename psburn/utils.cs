@@ -146,6 +146,46 @@ namespace Psburn
 		}
 
 		/// <summary>
+		/// Try to detect the path of highest version of csc.exe
+		/// </summary>
+		/// <returns>Path of csc.exe</returns>
+		public static string DetectCscPath()
+		{
+			try
+			{
+				string[] CscPaths = Directory.GetDirectories("C:\\Windows\\Microsoft.NET\\Framework");
+				return $"\"{Path.Join(CscPaths[CscPaths.Length - 1], "csc.exe")}\"";
+			}
+
+			catch
+			{
+				PrintColoredText("error: ", ConsoleColor.Red);
+				Console.WriteLine("failed to detect csc.exe path, try using --cscpath <cscpath>");
+				Environment.Exit(1);
+				return "";
+			}
+		}
+
+		/// <summary>
+		/// Extract zipfile to a directory with some messages 
+		/// </summary>
+		/// <param name="Zipfile">Path of zip file</param>
+		/// <param name="Dst">Path of destination directory</param>
+		public static void ExtractZip(string Zipfile, string Dst = "dist")
+		{
+			PrintColoredText("info: ", ConsoleColor.Blue);
+			Console.WriteLine($"extracting {Zipfile}");
+
+			try { System.IO.Compression.ZipFile.ExtractToDirectory(Zipfile, Dst, true); }
+			catch
+			{
+				PrintColoredText("caution: ", ConsoleColor.Red);
+				Console.WriteLine($"{Zipfile} has some extraction errors.");
+
+			}
+		}
+
+		/// <summary>
 		/// Checks wether platform is windows or not
 		/// </summary>
 		public static bool IsWindows

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,19 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="assets\extract.cs" />
-    <Compile Remove="assets\noextract.cs" />
-    <None Remove="assets\cross.py" />
-    <None Remove="assets\manifest.xml" />
-	<None Remove="assets\ICSharpCode.SharpZipLib.dll" />
+    <Compile Remove="assets\csharp_binder.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="assets\cross.py" />
-    <EmbeddedResource Include="assets\extract.cs" />
-	<EmbeddedResource Include="assets\noextract.cs" />
+    <None Remove="assets\manifest.xml" />
+	<None Remove="assets\ICSharpCode.SharpZipLib.dll" />
+	<None Remove="assets\PsburnCliParser.dll" />
+	<None Remove="assets\python_binder.py" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="assets\python_binder.py" />
+    <EmbeddedResource Include="assets\csharp_binder.cs" />
     <EmbeddedResource Include="assets\manifest.xml" />
 	<EmbeddedResource Include="assets\ICSharpCode.SharpZipLib.dll" />
+	<EmbeddedResource Include="assets\PsburnCliParser.dll" />
   </ItemGroup>
 
   <ItemGroup>

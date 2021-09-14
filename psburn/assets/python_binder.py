@@ -81,7 +81,6 @@ class DataParser:
 
 		return ArgumentsHelp
 
-
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
@@ -92,53 +91,27 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-
-"""
-Progam uses many variables, some variables and their meanings are listed below:
-1) ExPolicy: Execution policy for powershell.
-2) PSScriptFile: Main powershell script need to be runned.
-4) BlockCat: Blocks cat featues.
-5) PSScriptRoot: Root path of exe and acts as PSScriptRoot.
-6) PSEmbedString: Main finally generated powershell script.
-7) DefaultArgumentsCode: Auto generated default values of argument.
-8) ParsedParameters: Parsed parameters for further parsing.
-9) PSScriptName: Name of exe.
-10) ProgramDescription: Desciption for program.
-11) AllExamples: Examples related to use program.
-12) ProgramUsage: Usage for program.
-13) StorageDirectory: Temporary directory for storing files.
-14) OneDir: Program is going to be hosted in one directory or not.
-15) Executable: Path of powershell executable.
-
-Special Annotations:
-1) will come: means that data will be pushed here at time of compile.
-3) will embed: refers to file which will be embedded during compilation.
-"""
-
-# Main script
+	
+# will come - means that these variables will be pushed here at time of creation.
+ProgramDescription = "dynamic embedded powershell script" # will come
 ExPolicy = "Bypass" # will come
-PSScriptFile = "path/to/psscript.ps1" # will embed
-PSScriptFile = resource_path(PSScriptFile)
+BlockCat = False # will come
+OneDir = False # will come
+ParsedParameters = [] # will come
+DefaultArgumentsCode = [] # will come
+HelpArgumentsTexts = [] # will come
+PSScriptFile = "binding_psscript.ps1" # will come
 
-with open(PSScriptFile) as f:
+with open(resource_path(PSScriptFile), encoding="utf-8") as f:
 	PSScriptFile = f.read()
 
-# Cat features
-BlockCat = False # will come
-
-# Fixing some lost variables and appending default values to defined variables in powershell script
-PSScriptRoot = os.path.split(sys.executable)[0]
-PSEmbedString = f"$PSScriptRoot = '{PSScriptRoot}'\n\n"
-
-DefaultArgumentsCode = [] # will come
-
-PSEmbedString += "\n"
+# Pre insertion for default code
+PSEmbedString = "\n"
 
 for DefaultCodeLine in DefaultArgumentsCode:
 	PSEmbedString += DefaultCodeLine + "\n"
 
-# Parse parameters from powershell script
-ParsedParameters = [] # will come
+# Semi processed data parsing 
 ParseParametersData = DataParser(ParsedParameters)
 PostionalArguments = ParseParametersData.ParsePostionalArguments()
 OptionalArguments = ParseParametersData.ParseOptionalArguments()
@@ -147,22 +120,8 @@ ArgumentsBools = ParseParametersData.ParseArgumentsBoolsDictionary()
 ArgumentsAlias = ParseParametersData.ParseArgumentsAliasDictionary()
 ArgumentsHelp = ParseParametersData.ParseArgumentsHelpDictionary()
 
-# Program help related texts generations
-FileBaseName = os.path.split(sys.executable)[1].replace(".exe", "")
-
-ProgramDescription = "dynamic embedded powershell script" # will come
-ProgramDescription = ProgramDescription.replace("$newline", "\n")
-HelpArgumentsTexts = [] # will come
-AllExamples = [] # will come
-ProgramUsage = "" # will come
-
-
-# Parser integration
-if ProgramUsage == "":
-	ArgumentParser = argparse.ArgumentParser(description=ProgramDescription)
-else:
-	ArgumentParser = argparse.ArgumentParser(description=ProgramDescription, usage=ProgramUsage)
-
+# Argument parser integration
+ArgumentParser = argparse.ArgumentParser(description=ProgramDescription)
 ArgumentParser.add_argument("--cat", dest="cat", action="store_true", help="instead of running cat powershell script into console (default: false)")
 
 for PostionalArg in PostionalArguments:
@@ -170,7 +129,6 @@ for PostionalArg in PostionalArguments:
 	ArgumentParser.add_argument(PostionalArg, help=HelpForArgument)
 
 for OptionalArg in OptionalArguments:
-
 	DestForArgument = OptionalArg.replace("-", "")
 	HelpForArgument = ArgumentsHelp[OptionalArg]
 
@@ -190,13 +148,22 @@ for OptionalArg in OptionalArguments:
 
 ParsedArgparseArguments = ArgumentParser.parse_args()
 
-# Extended parser integration
+# print powershell script if --cat argument is supplied
+if ParsedArgparseArguments.cat:
+	if BlockCat:
+		print("error: cat is blocked during runtime")
+		sys.exit(1)
+	else:
+		print(PSScriptFile)
+		sys.exit(0)
+
+# Post code generation for supplied arguments
 ParsedArgparseArgumentsDictionary = {}
+
 for Argument, Value in ParsedArgparseArguments._get_kwargs():
 	ParsedArgparseArgumentsDictionary[Argument] = Value
 
 AllArguments = " ".join(sys.argv)
-
 
 def PowershellCodeGenerator(Arguments, DestForArgument, ArgumentsType=ArgumentsType, ParsedArgparseArgumentsDictionary=ParsedArgparseArgumentsDictionary):
 	PSEmbedString = ""
@@ -213,13 +180,11 @@ def PowershellCodeGenerator(Arguments, DestForArgument, ArgumentsType=ArgumentsT
 
 	return PSEmbedString
 
-
 for PostionalArg in PostionalArguments:
 	DestForArgument = PostionalArg.replace("-", "")
 	PSEmbedString += PowershellCodeGenerator(PostionalArg, DestForArgument)
 
 for OptionalArg in OptionalArguments:
-
 	DestForArgument = OptionalArg.replace("-", "")
 
 	if OptionalArg in ArgumentsAlias.keys():
@@ -230,38 +195,27 @@ for OptionalArg in OptionalArguments:
 		if f"--{OptionalArg}" in AllArguments:
 			PSEmbedString += PowershellCodeGenerator(OptionalArg, DestForArgument)
 
-# Final merge of orginal powershell script with genrated parsed variables
-PSEmbedString += "\n" + PSScriptFile
 
-# Cat file features if blocked raise errors
-if ParsedArgparseArguments.cat:
-	if BlockCat:
-		print("error: cat is blocked during runtime")
-		sys.exit(1)
-	else:
-		print(PSEmbedString)
-		sys.exit(0)
-
-# Creating unique temporary directory
+# Unzip essentials to temporay directory
+IsWindows = platform.system().lower().startswith("win")
 StorageDirectory = resource_path("")
-
-# Self contained specific checks
-OneDir = False # will come
-OneFile = True if OneDir == False else False
+PSScriptRoot = os.path.split(sys.executable)[0]
 
 # Determining the path of powershell executable
-IsWindows = platform.system().lower().startswith("win")
-
+OneFile = True if OneDir == False else False
 Executable = "pwsh.exe" if IsWindows else "pwsh"
 Executable = os.path.join(StorageDirectory, "pwsh", Executable) if OneFile else os.path.join(PSScriptRoot, "pwsh", Executable)
 
-if os.path.exists(Executable) is not True:
+if not os.path.exists(Executable):
 	Executable = "powershell.exe" if IsWindows else "pwsh"
 
-# Writting a dynamic powershell script to temporary path
+# Writting a new powershell script to temporary path
+PSEmbedString = f"$Executable = '{Executable}'\n" + PSEmbedString
+PSEmbedString = f"$PSScriptTempRoot = '{StorageDirectory}'\n" + PSEmbedString
+PSEmbedString = f"$PSScriptRoot = '{PSScriptRoot}'\n"  + PSEmbedString
+PSEmbedString += "\n" + PSScriptFile
+
 TempScriptPath = os.path.join(StorageDirectory, "temp.ps1")
-PSEmbedString = f"$PSScriptTempRoot = '{StorageDirectory}'\n" + PSEmbedString;
-PSEmbedString = f"$Executable = '{Executable}'\n" + PSEmbedString;
 
 with open(TempScriptPath, "w", encoding="utf-8") as f:
 	f.write(PSEmbedString)
