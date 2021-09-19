@@ -1,11 +1,25 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
+using ICSharpCode.SharpZipLib.Zip;
 
 
 namespace PsburnCliParser
 {
     public class Utils
     {
+        /// <summary>
+        /// Read lines from an embedded resource file and returns a string.
+        /// </summary>
+        /// <param name="EmbeddedFile">Path of embedded file</param>
+        /// <returns>string</returns>
+        public static string EmeddedFileReadAllText(string EmbeddedFile)
+        {
+            Assembly assembly = Assembly.GetEntryAssembly();
+            StreamReader LoadedFileStream = new StreamReader(assembly.GetManifestResourceStream(EmbeddedFile));
+            return LoadedFileStream.ReadToEnd();
+        }
+
         /// <summary>
         /// Creates a unique temporary directory
         /// </summary>
@@ -16,41 +30,45 @@ namespace PsburnCliParser
 
             if (Directory.Exists(UniqueTempDirPath))
             {
-                PrintColoredText("fatal: ", ConsoleColor.Red);
-                Console.WriteLine("cannot assign a unique temporary directory, please re run this program.");
+                Console.WriteLine("fatal: cannot assign a unique temporary directory, please re run this program.");
                 Environment.Exit(1);
             }
-            
+
             Directory.CreateDirectory(UniqueTempDirPath);
             return UniqueTempDirPath;
         }
 
         /// <summary>
-        /// Prints colored text to console.
-        /// <code>> Utils.PrintColoredText("caution", ConsoleColor.Yellow);</code>
-        /// <code>caution</code>
+        /// Unzip a embedded zipfile by making a local copy on system.
         /// </summary>
-        /// <param name="Text">Text to print</param>
-        /// <param name="Color">Color of text</param>
-        /// <param name="End">End of line</param>
-        public static void PrintColoredText(string Text, ConsoleColor Color, string End = "")
+        /// <param name="EmbeddedZipPath">Path of embedded zipfile</param>
+        /// <param name="ExtractDirectory">Extraction directory</param>
+        /// <param name="TempPath">Extraction temporary directory</param>
+        public static void UnzipEmbeddedZip(string EmbeddedZipPath, string ExtractDirectory, string TempPath)
         {
-            Console.ForegroundColor = Color;
-            Console.Write(Text + End);
-            Console.ResetColor();
-        }
+            string TempZipPath = Path.Combine(TempPath, "temp.zip");
 
-        /// <summary>
-        /// Checks wether platform is windows or not
-        /// </summary>
-        public static bool IsWindows
-        {
-            get
+            using (var Resource = Assembly.GetEntryAssembly().GetManifestResourceStream(EmbeddedZipPath))
             {
-                string Platform = Environment.OSVersion.Platform.ToString().ToLower();
-                if (Platform.StartsWith("win")) { return (true); }
-                else { return (false); }
+                using (var File = new FileStream(TempZipPath, FileMode.Create, FileAccess.Write))
+                {
+                    Resource.CopyTo(File);
+                }
             }
+            
+            try
+            {
+                FastZip fastZip = new FastZip();
+                fastZip.ExtractZip(TempZipPath, ExtractDirectory, null);
+            }
+
+            catch
+            {
+                Console.WriteLine("fatal: failed to extract embedded zip.");
+                Environment.Exit(1);
+            }
+
+            System.IO.File.Delete(TempZipPath);
         }
 
         /// <summary>
@@ -93,6 +111,19 @@ namespace PsburnCliParser
             {
                 Console.WriteLine(e.Message);
                 return 1;
+            }
+        }
+
+        /// <summary>
+        /// Checks wether platform is windows or not
+        /// </summary>
+        public static bool IsWindows
+        {
+            get
+            {
+                string Platform = Environment.OSVersion.Platform.ToString().ToLower();
+                if (Platform.StartsWith("win")) { return (true); }
+                else { return (false); }
             }
         }
     }

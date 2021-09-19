@@ -5,7 +5,7 @@
 </p>
 
 
-<p align="center">psburn is tool to package powershell scripts into executables by encapsulating it inside a python or c# program.</p>
+<p align="center">psburn is a tool to package powershell scripts into executables by binding it with a c# or python program.</p>
 
 <p align="center">
   <button class="md-button md-button--primary" onclick="location.href = 'gettingstarted/installations/';">Quick Start</button>

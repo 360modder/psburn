@@ -13,7 +13,7 @@
   </a>
 </p>
 
-psburn is tool to package powershell scripts into executables by encapsulating it inside a python or c# program.
+psburn is a tool to package powershell scripts into executables by binding it with a c# or python program.
 
 Vist psburn's [website](https://360modder.github.io/psburn/) for more details.
 

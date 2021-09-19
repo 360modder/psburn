@@ -7,15 +7,12 @@ namespace Psburn
 {
     public class PsburnCommands
     {
-        public static void Create(string psscript, string output, bool py, bool selfcontained,
-                                  bool embedresources, bool onedir, string executionpolicy, bool blockcat, bool verbose)
+        public static void Create(string psscript, string output, bool py, bool selfcontained, bool embedresources,
+                                  bool onedir, string executionpolicy, bool blockcat, bool verbose)
         {
-            PowershellParser ParsePowershellScript = new PowershellParser(File.ReadAllLines(psscript), Verbosity: verbose);
+            PowershellScriptParser ParsePowershellScript = new PowershellScriptParser(File.ReadAllLines(psscript), Verbosity: verbose);
             string ProgramDescription = ParsePowershellScript.ParseDescription();
             string[] ParsedParameters = ParsePowershellScript.ParseParameters();
-            string[] ParsedDefaultCode = ParsePowershellScript.ParseDefaultCode(ParsedParameters);
-            string[] ParsedHelp = ParsePowershellScript.ParseHelp();
-            string[] ParsedExamples = ParsePowershellScript.ParseExamples();
 
             if (!py)
             {
@@ -58,21 +55,6 @@ namespace Psburn
                     {
                         Utils.StringArrayReplace(CsCodeLines, Line, $"\t\t\tstring[] ParsedParameters = {Utils.ArrayStructureToString(ParsedParameters)};");
                     }
-
-                    else if (Line.Contains("string[] DefaultArgumentsCode"))
-                    {
-                        Utils.StringArrayReplace(CsCodeLines, Line, $"\t\t\tstring[] DefaultArgumentsCode = {Utils.ArrayStructureToString(ParsedDefaultCode)};");
-                    }
-
-                    else if (Line.Contains("string[] HelpArgumentsTexts"))
-                    {
-                        Utils.StringArrayReplace(CsCodeLines, Line, $"\t\t\tstring[] HelpArgumentsTexts = {Utils.ArrayStructureToString(ParsedHelp)};");
-                    }
-
-                    else if (Line.Contains("string[] AllExamples"))
-                    {
-                        Utils.StringArrayReplace(CsCodeLines, Line, $"\t\t\tstring[] AllExamples = {Utils.ArrayStructureToString(ParsedExamples)};");
-                    }
                 }
 
                 if (output == "working directory")
@@ -84,8 +66,6 @@ namespace Psburn
 
             else
             {
-                ParsedParameters = ParsePowershellScript.ParseParameters(HelpText: true);
-
                 string[] PythonCodeLines = Utils.EmeddedFileReadAllLines("psburn.assets.python_binder.py");
 
                 foreach (string Line in PythonCodeLines)
@@ -116,11 +96,6 @@ namespace Psburn
                         Utils.StringArrayReplace(PythonCodeLines, Line, $"ParsedParameters = {Utils.ArrayStructureToString(ParsedParameters, Brackets: "[,]")}");
                     }
 
-                    else if (Line.Contains("DefaultArgumentsCode = [] # will come"))
-                    {
-                        Utils.StringArrayReplace(PythonCodeLines, Line, $"DefaultArgumentsCode = {Utils.ArrayStructureToString(ParsedDefaultCode, Brackets: "[,]")}");
-                    }
-
                     else if (Line.Contains("PSScriptFile = \"binding_psscript.ps1\" # will come"))
                     {
                         Utils.StringArrayReplace(PythonCodeLines, Line, $"PSScriptFile = \"{Path.GetFileNameWithoutExtension(psscript)}.ps1\"");
@@ -136,8 +111,8 @@ namespace Psburn
         }
 
         public static void Build(string psscript, string binderfile, string powershellzip, string resourceszip,
-                           bool onedir, string icon, bool noconsole, bool uacadmin, string cscpath, bool pyinstallerprompt,
-                          bool debug, bool verbose)
+                                 bool onedir, string icon, bool noconsole, bool uacadmin, string cscpath,
+                                 bool pyinstallerprompt, bool debug, bool verbose)
         {
             if (Directory.Exists("dist")) { Directory.Delete("dist", true); }
             Directory.CreateDirectory("dist/.cache");
@@ -151,7 +126,7 @@ namespace Psburn
                 List<string> CscArgs = new List<string> {
                 "/nologo", "/optimize",
                 "/reference:dist/PsburnCliParser.dll",
-                "/reference:dist/ICSharpCode.SharpZipLib.dll",
+                //"/reference:dist/ICSharpCode.SharpZipLib.dll",
                 $"/resource:\"{psscript}\",csharp_binder.binding_psscript.ps1" };
 
                 if (powershellzip != "no zip" && onedir) { Utils.ExtractZip(powershellzip); }
@@ -251,7 +226,7 @@ namespace Psburn
             else
             {
                 Utils.PrintColoredText("error: ", ConsoleColor.Red);
-                Console.WriteLine("supplied binder file is neither python nor c# file.");
+                Console.WriteLine("supplied binder file is neither c# nor python file.");
                 Environment.Exit(1);
             }
         }

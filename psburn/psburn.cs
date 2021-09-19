@@ -10,7 +10,7 @@ namespace Psburn
         {
             // Root Command (psburn)
             var RootCommand = new RootCommand("psburn is a tool to package powershell scripts into executables " +
-                                              "by encapsulating it inside a c# or python program.");
+                                              "by binding it with a c# or python program.");
 
             // Global Options
             RootCommand.AddGlobalOption(new Option<bool>(
@@ -20,7 +20,7 @@ namespace Psburn
             );
             
             // Child Command (create)
-            var ChildCommandCreate = new Command("create", "create a psburn c# file");
+            var ChildCommandCreate = new Command("create", "create a binder c# or python file");
             RootCommand.AddCommand(ChildCommandCreate);
 
             // Child Command (create) - Arguments
@@ -30,22 +30,20 @@ namespace Psburn
             ChildCommandCreate.AddOption(new Option<string>(
                 aliases: new string[] { "-o", "--output" },
                 getDefaultValue: () => "working directory",
-                description: "path of output c# file")
+                description: "path for output of c# or python file")
             );
 
             ChildCommandCreate.AddOption(new Option<bool>(
                 aliases: new string[] { "--py" },
                 getDefaultValue: () => false,
-                description: "generates python code")
+                description: "generate python binder file instead of c#")
             );
-
 
             ChildCommandCreate.AddOption(new Option<bool>(
                 aliases: new string[] { "--self-contained" },
                 getDefaultValue: () => false,
                 description: "enable this option if you are using --powershell-zip")
             );
-
 
             ChildCommandCreate.AddOption(new Option<bool>(
                 aliases: new string[] { "--embed-resources" },
@@ -55,36 +53,36 @@ namespace Psburn
             ChildCommandCreate.AddOption(new Option<bool>(
                 aliases: new string[] { "--onedir" },
                 getDefaultValue: () => false,
-                description: "run powershell from current directory")
+                description: "run powershell executable from root directory for self contained builds")
             );
 
             ChildCommandCreate.AddOption(new Option<string>(
                 aliases: new string[] { "--execution-policy" },
                 getDefaultValue: () => "Bypass",
-                description: "execution policy for the powershell script")
+                description: "script execution policy")
             );
 
             ChildCommandCreate.AddOption(new Option<bool>(
-                aliases: new string[] { "--blockcat" },
+                aliases: new string[] { "--block-cat" },
                 getDefaultValue: () => false,
-                description: "block cating of script which prevents script exposure")
+                description: "block script cat feature at runtime")
             );
 
             ChildCommandCreate.Handler = CommandHandler.Create<string, string, bool, bool, bool, bool, string, bool, bool>(PsburnCommands.Create);
 
             // Child Command (build)
-            var ChildCommandBuild = new Command("build", "build an executable from c# program");
+            var ChildCommandBuild = new Command("build", "build an executable from binder file");
             RootCommand.AddCommand(ChildCommandBuild);
 
             // Child Command (build) - Arguments
             ChildCommandBuild.AddArgument(new Argument<string>("psscript", "path of powershell script"));
-            ChildCommandBuild.AddArgument(new Argument<string>("binderfile", "path of binding py or c# file"));
+            ChildCommandBuild.AddArgument(new Argument<string>("binderfile", "path of binder file"));
 
             // Child Command (build) - Options
             ChildCommandBuild.AddOption(new Option<string>(
                 aliases: new string[] { "-p", "--powershell-zip" },
                 getDefaultValue: () => "no zip",
-                description: "create a self contained executable")
+                description: "create a powershell core self contained executable")
             );
 
             ChildCommandBuild.AddOption(new Option<string>(
@@ -96,19 +94,19 @@ namespace Psburn
             ChildCommandBuild.AddOption(new Option<bool>(
                 aliases: new string[] { "--onedir" },
                 getDefaultValue: () => false,
-                description: "run powershell from current directory")
+                description: "run powershell executable from root directory for self contained builds")
             );
 
             ChildCommandBuild.AddOption(new Option<string>(
                 aliases: new string[] { "--icon" },
                 getDefaultValue: () => "no icon",
-                description: "apply icon to generated executable")
+                description: "icon path for executable")
             );
 
             ChildCommandBuild.AddOption(new Option<bool>(
                 aliases: new string[] { "--no-console" },
                 getDefaultValue: () => false,
-                description: "create executable without a console, this helps for running scripts in background for gui programs")
+                description: "create executable without a console (gui)")
             );
 
             ChildCommandBuild.AddOption(new Option<bool>(
@@ -120,13 +118,13 @@ namespace Psburn
             ChildCommandBuild.AddOption(new Option<string>(
                 aliases: new string[] { "--cscpath" },
                 getDefaultValue: () => "auto detect",
-                description: "c# compiler path (C:\\Windows\\Microsoft.Net\\Framework\\<version>\\csc.exe)")
+                description: "csc/c# compiler path (C:\\Windows\\Microsoft.Net\\Framework\\<version>\\csc.exe)")
             );
 
             ChildCommandBuild.AddOption(new Option<bool>(
                 aliases: new string[] { "--pyinstaller-prompt" },
                 getDefaultValue: () => false,
-                description: "ask for pyinstaller")
+                description: "ask for extra pyinstaller arguments")
             );
 
             ChildCommandBuild.AddOption(new Option<bool>(
