@@ -22,16 +22,7 @@ Write-Output $message_file
 
 For build the executable, first compress resources directory to a zip file and then run the following commands.
 
-=== "Python"
-
-	```bash
-	psburn cross script.ps1
-	psburn cbuild script.py script.ps1 -r resources.zip
-	```
-
-=== "C#"
-
-	```bash
-	psburn create script.ps1 --embed-resources
-	psburn build script.cs script.ps1 -r resources.zip
-	```
+```bash
+psburn create script.ps1 --embed-resources
+psburn build script.ps1 script.cs -r resources.zip
+```

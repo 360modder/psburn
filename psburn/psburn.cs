@@ -122,6 +122,12 @@ namespace Psburn
             );
 
             ChildCommandBuild.AddOption(new Option<bool>(
+                aliases: new string[] { "--merge" },
+                getDefaultValue: () => false,
+                description: "merge dll and exe using ILMerge")
+            );
+
+            ChildCommandBuild.AddOption(new Option<bool>(
                 aliases: new string[] { "--pyinstaller-prompt" },
                 getDefaultValue: () => false,
                 description: "ask for extra pyinstaller arguments")
@@ -133,7 +139,7 @@ namespace Psburn
                 description: "don't delete runtime generated files")
             );
 
-            ChildCommandBuild.Handler = CommandHandler.Create<string, string, string, string, bool, string, bool, bool, string, bool, bool, bool>(PsburnCommands.Build);
+            ChildCommandBuild.Handler = CommandHandler.Create<string, string, string, string, bool, string, bool, bool, string, bool, bool, bool, bool>(PsburnCommands.Build);
 
             return RootCommand.InvokeAsync(args).Result;
         }

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "psburn"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.1.3"
 #define MyAppPublisher "360modder"
 #define MyAppURL "https://360modder.github.io/psburn"
 

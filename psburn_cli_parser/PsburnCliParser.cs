@@ -19,7 +19,7 @@ namespace PsburnCliParser
         {
             Argument = ParsedArgumentData.Split(',')[0];
             Type = ParsedArgumentData.Split(',')[1];
-            Required = ParsedArgumentData.Split(',')[2].Equals("true");
+            Required = ParsedArgumentData.Split(',')[2] == "true";
             Value = ParsedArgumentData.Split(',')[3];
             Alias = ParsedArgumentData.Split(',')[4];
             Help = ParsedArgumentData.Split(',')[5];

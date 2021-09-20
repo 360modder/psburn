@@ -5,81 +5,16 @@ import platform
 import subprocess
 
 
-class DataParser:
-	
-	def __init__(self, ParsedArguments):
-		self.ParsedArguments = ParsedArguments
+class ArgumentDataNamespace:
 
-	def ParsePostionalArguments(self):
-		Parameters = []
-
-		for Argument in self.ParsedArguments:
-			Variable = Argument.split(",")[0];
-			Required = Argument.split(",")[2];
-
-			if Required == "true":
-				Parameters.append(Variable)
-
-		return Parameters
-
-	def ParseOptionalArguments(self):
-		Parameters = []
-
-		for Argument in self.ParsedArguments:
-			Variable = Argument.split(",")[0];
-			Required = Argument.split(",")[2];
-
-			if Required == "false":
-				Parameters.append(Variable)
-
-		return Parameters
-
-	def ParseArgumentsTypesDictionary(self):
-		ArgumentsTypes = {}
-
-		for Argument in self.ParsedArguments:
-			Variable = Argument.split(",")[0];
-			Type = Argument.split(",")[1];
-
-			ArgumentsTypes[Variable] = Type
-
-		return ArgumentsTypes
-
-	def ParseArgumentsBoolsDictionary(self):
-		ArgumentsBools = {}
-
-		for Argument in self.ParsedArguments:
-			Variable = Argument.split(",")[0];
-			Value = Argument.split(",")[3];
-
-			ArgumentsBools[Variable] = Value
-
-		return ArgumentsBools
-
-	def ParseArgumentsAliasDictionary(self):
-		ArgumentsAlias = {}
-
-		for Argument in self.ParsedArguments:
-			Variable = Argument.split(",")[0];
-			Alias = Argument.split(",")[4];
-
-			if Alias == "":
-				continue
-
-			ArgumentsAlias[Variable] = Alias
-
-		return ArgumentsAlias
-
-	def ParseArgumentsHelpDictionary(self):
-		ArgumentsHelp = {}
-
-		for Argument in self.ParsedArguments:
-			Variable = Argument.split(",")[0];
-			Help = Argument.split(",")[5];
-
-			ArgumentsHelp[Variable] = Help
-
-		return ArgumentsHelp
+	def __init__(self, ParsedArgumentData: str):
+		Data = ParsedArgumentData.split(",")
+		self.Argument = Data[0]
+		self.Type = Data[1]
+		self.Required = Data[2] == "true"
+		self.Value = Data[3]
+		self.Alias = Data[4]
+		self.Help = Data[5]
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -98,57 +33,42 @@ ExPolicy = "Bypass" # will come
 BlockCat = False # will come
 OneDir = False # will come
 ParsedParameters = [] # will come
-DefaultArgumentsCode = [] # will come
-HelpArgumentsTexts = [] # will come
 PSScriptFile = "binding_psscript.ps1" # will come
-
-with open(resource_path(PSScriptFile), encoding="utf-8") as f:
-	PSScriptFile = f.read()
-
-# Pre insertion for default code
-PSEmbedString = "\n"
-
-for DefaultCodeLine in DefaultArgumentsCode:
-	PSEmbedString += DefaultCodeLine + "\n"
-
-# Semi processed data parsing 
-ParseParametersData = DataParser(ParsedParameters)
-PostionalArguments = ParseParametersData.ParsePostionalArguments()
-OptionalArguments = ParseParametersData.ParseOptionalArguments()
-ArgumentsType = ParseParametersData.ParseArgumentsTypesDictionary()
-ArgumentsBools = ParseParametersData.ParseArgumentsBoolsDictionary()
-ArgumentsAlias = ParseParametersData.ParseArgumentsAliasDictionary()
-ArgumentsHelp = ParseParametersData.ParseArgumentsHelpDictionary()
 
 # Argument parser integration
 ArgumentParser = argparse.ArgumentParser(description=ProgramDescription)
-ArgumentParser.add_argument("--cat", dest="cat", action="store_true", help="instead of running cat powershell script into console (default: false)")
 
-for PostionalArg in PostionalArguments:
-	HelpForArgument = ArgumentsHelp[PostionalArg]
-	ArgumentParser.add_argument(PostionalArg, help=HelpForArgument)
+for ParsedArgumentData in ParsedParameters:
+	Arg = ArgumentDataNamespace(ParsedArgumentData)
 
-for OptionalArg in OptionalArguments:
-	DestForArgument = OptionalArg.replace("-", "")
-	HelpForArgument = ArgumentsHelp[OptionalArg]
-
-	if OptionalArg in ArgumentsAlias.keys():
-		if ArgumentsType[OptionalArg] == "bool":
-			BoolSwitch = "store_true" if ArgumentsBools[OptionalArg] == "false" else "store_false"
-			ArgumentParser.add_argument(f"-{ArgumentsAlias[OptionalArg]}", f"--{OptionalArg}", dest=DestForArgument, action=BoolSwitch, help=HelpForArgument)
-		else:
-			ArgumentParser.add_argument(f"-{ArgumentsAlias[OptionalArg]}", f"--{OptionalArg}", dest=DestForArgument, help=HelpForArgument)
-
+	if Arg.Required:
+		ArgumentParser.add_argument(Arg.Argument, help=Arg.Help)
+	
 	else:
-		if ArgumentsType[OptionalArg] == "bool":
-			BoolSwitch = "store_true" if ArgumentsBools[OptionalArg] == "false" else "store_false"
-			ArgumentParser.add_argument(f"--{OptionalArg}", dest=DestForArgument, action=BoolSwitch, help=HelpForArgument)
-		else:
-			ArgumentParser.add_argument(f"--{OptionalArg}", dest=DestForArgument, help=HelpForArgument)
+		DestForArgument = Arg.Argument.replace("-", "")
+		HelpText = Arg.Help + f" [default: {Arg.Value}]"
 
+		if Arg.Alias != "":
+			if Arg.Type == "bool":
+				BoolSwitch = "store_true" if Arg.Value == "false" else "store_false"
+				ArgumentParser.add_argument(f"-{Arg.Alias}", f"--{Arg.Argument}", dest=DestForArgument, action=BoolSwitch, help=HelpText)
+			else:
+				ArgumentParser.add_argument(f"-{Arg.Alias}", f"--{Arg.Argument}", dest=DestForArgument, help=HelpText)
+
+		else:
+			if Arg.Type == "bool":
+				BoolSwitch = "store_true" if Arg.Value == "false" else "store_false"
+				ArgumentParser.add_argument(f"--{Arg.Argument}", dest=DestForArgument, action=BoolSwitch, help=HelpText)
+			else:
+				ArgumentParser.add_argument(f"--{Arg.Argument}", dest=DestForArgument, help=HelpText)
+
+ArgumentParser.add_argument("--cat", dest="cat", action="store_true", help="instead of running cat powershell script into console [default: false]")
 ParsedArgparseArguments = ArgumentParser.parse_args()
 
 # print powershell script if --cat argument is supplied
+with open(resource_path(PSScriptFile), encoding="utf-8") as f:
+	PSScriptFile = f.read()
+
 if ParsedArgparseArguments.cat:
 	if BlockCat:
 		print("error: cat is blocked during runtime")
@@ -157,44 +77,21 @@ if ParsedArgparseArguments.cat:
 		print(PSScriptFile)
 		sys.exit(0)
 
-# Post code generation for supplied arguments
+# Code generation for supplied arguments
 ParsedArgparseArgumentsDictionary = {}
 
 for Argument, Value in ParsedArgparseArguments._get_kwargs():
 	ParsedArgparseArgumentsDictionary[Argument] = Value
 
-AllArguments = " ".join(sys.argv)
-
-def PowershellCodeGenerator(Arguments, DestForArgument, ArgumentsType=ArgumentsType, ParsedArgparseArgumentsDictionary=ParsedArgparseArgumentsDictionary):
-	PSEmbedString = ""
-
-	if ArgumentsType[Arguments] == "bool":
-		BoolSwitch = "$true" if ParsedArgparseArgumentsDictionary[DestForArgument] else "$false"
-		PSEmbedString += f"${DestForArgument} = {BoolSwitch}\n"
-
-	elif ArgumentsType[Arguments] == "float":
-		PSEmbedString += f"${DestForArgument} = {ParsedArgparseArgumentsDictionary[DestForArgument]}\n"
-
-	elif ArgumentsType[Arguments] == "string":
-		PSEmbedString += f"${DestForArgument} = '{ParsedArgparseArgumentsDictionary[DestForArgument]}'\n"
-
-	return PSEmbedString
-
-for PostionalArg in PostionalArguments:
-	DestForArgument = PostionalArg.replace("-", "")
-	PSEmbedString += PowershellCodeGenerator(PostionalArg, DestForArgument)
-
-for OptionalArg in OptionalArguments:
-	DestForArgument = OptionalArg.replace("-", "")
-
-	if OptionalArg in ArgumentsAlias.keys():
-		if f"--{OptionalArg}" in AllArguments or f"-{ArgumentsAlias[OptionalArg]}" in AllArguments:
-			PSEmbedString += PowershellCodeGenerator(OptionalArg, DestForArgument)
-
-	else:
-		if f"--{OptionalArg}" in AllArguments:
-			PSEmbedString += PowershellCodeGenerator(OptionalArg, DestForArgument)
-
+PSEmbedString = ""
+for ParsedArgumentData in ParsedParameters:
+	Arg = ArgumentDataNamespace(ParsedArgumentData)
+	if Arg.Type == "bool":
+		PSEmbedString += f"${Arg.Argument} = ${str(ParsedArgparseArgumentsDictionary[Arg.Argument]).lower()}\n"
+	elif Arg.Type == "double":
+		PSEmbedString += f"${Arg.Argument} = {ParsedArgparseArgumentsDictionary[Arg.Argument]}\n"
+	elif Arg.Type == "string":
+		PSEmbedString += f"${Arg.Argument} = '{ParsedArgparseArgumentsDictionary[Arg.Argument]}'\n"
 
 # Unzip essentials to temporay directory
 IsWindows = platform.system().lower().startswith("win")

@@ -67,13 +67,8 @@ nav:
     - Embedding Resources:
       - usage/embeddingresources/embeddingresources.md
       - Invoke Sub Scripts: usage/embeddingresources/invokesubscripts.md
-    - No Extract: usage/noextract.md
   - Documentation:
-    - Python:
-      - Cross: documentation/python/cross.md
-      - CBuild: documentation/python/cbuild.md
-    - C#:
-      - Create: documentation/csharp/create.md
-      - Build: documentation/csharp/build.md
+    - Create: documentation/create.md
+    - Build: documentation/build.md
     - Argparse: documentation/argparse.md
     - Runtime: documentation/runtime.md

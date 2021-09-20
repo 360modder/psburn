@@ -47,19 +47,10 @@ Contents of scripts.
 
 Now compress this resources directory to a zip file and build the executable.
 
-=== "Python"
-
-	```bash
-	psburn cross app.ps1 -o app.py
-	psburn cbuild app.py app.ps1 -r resources.zip --no-prompt
-	```
-
-=== "C#"
-
-	```bash
-	psburn create app.ps1 -o app.cs --embed-resources
-	psburn build app.cs app.ps1 -r resources.zip
-	```
+```bash
+psburn create app.ps1 --embed-resources
+psburn build app.ps1 app.cs -r resources.zip
+```
 
 Now if you run compiled executable, you will see this output.
 

@@ -12,20 +12,14 @@ Base descriptor for program.
 ### Syntax
 
 ```ps1
-#@parser {description: "psburn$newlineparser-cli demo", usage: "usage: test.exe [<commands>]", examples: ["$file_base_name.exe --name $double_qoutes360modder$double_qoutes", "$file_base_name.exe --log"]}
+#@parser {description: "psburn parser-cli demo"}
 ```
 
 ### Properties
 
-| Key         | Type       | Variables                       |
-|-------------|------------|---------------------------------|
-| description | string     | $newline                        |
-| usage       | string     |                                 |
-| examples    | list/array | $file_base_name, $double_qoutes |
-
-!!! note
-	**Variables** can be used inside strings which will be parsed later on.
-	Python builds doesn't support Variables.
+| Key         | Type       |
+|-------------|------------|
+| description | string     |
 
 ## #@param
 
@@ -39,14 +33,14 @@ Arguments and parameter descriptor for program.
 
 ### Properties
 
-| Key      | Type           | Values                |
-|----------|----------------|-----------------------|
-| variable | string         |                       |
-| alias    | char or string |                       |
-| value    | string         |                       |
-| type     | string         | string, float or bool |
-| required | string         | true or false         |
-| help     | string         |                       |
+| Key      | Type           | Values                 |
+|----------|----------------|------------------------|
+| variable | string         |                        |
+| alias    | char or string |                        |
+| value    | string         |                        |
+| type     | string         | string, double or bool |
+| required | string         | true or false          |
+| help     | string         |                        |
 
 !!! note
 	If **Values** cell is blank it means any value can be assigned.

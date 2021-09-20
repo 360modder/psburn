@@ -1,8 +1,0 @@
-graph LR
-  A[psscript.ps1] --> B{psburn};
-  B -->|cross| C[psscript.py];
-  B -->|create| D[psscript.cs];
-  C & A --> E[cbuild];
-  D & A --> F[build];
-  E -->|pyinstaller| G[executable];
-  F -->|c# compiler| G;

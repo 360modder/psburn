@@ -47,7 +47,7 @@ You should attain this type of directory structure.
 ```
 pwsh/
     *.dll     # dll files.
-    *.so      # libs files.
+    *.so      # lib files.
     *.exe     # exe files.
     ...       # other files and folders.
 ```
@@ -68,19 +68,10 @@ Now compress pwsh directory into a zip file.
 
 ## Building Executable
 
-=== "Python"
-	
-	```bash
-	psburn cross script.ps1
-	psburn cbuild script.py script.ps1 -p pwsh.zip
-	```
-
-=== "C#"
-
-	```bash
-	psburn create script.ps1 --self-contained
-	psburn build script.cs script.ps1 -p pwsh.zip
-	```
+```bash
+psburn create script.ps1 --self-contained
+psburn build script.ps1 script.cs -p pwsh.zip
+```
 
 !!! note
 	Zip compression level can make executable large or small size for **only c#** builds.

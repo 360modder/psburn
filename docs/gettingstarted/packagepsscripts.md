@@ -1,62 +1,57 @@
 # Package Powershell Scripts
 
-If you are on *windows* then c# commands works without any dependencies, means you can run those commands without installing any other dependencies.
+If you are on *windows* then c# api works without any dependencies, means you can run commands without installing any other dependencies. To use python api, *pyinstaller* must be installed on your system.
 
 ## Packaging
 
-=== "Python"
+Generate binder file to run powershell scripts with program.
 
-	Generating code to bind your powershell scripts with python program.
-	
-	```bash
-	psburn cross script.ps1
-	```
+```bash
+psburn create script.ps1
+```
 
-	This command will generate a python file named after the basename of your powershell script. Now build a executable out of this file by running **cbuild** command.
+This command will generated a c# binder file named after the basename of your powershell script. Now build a executable out of this file by running **build** command.
 
-	```bash
-	psburn cbuild script.py script.ps1 --no-prompt
-	```
-
-=== "C#"
-
-	Generating code to bind your powershell scripts with c# program.
-
-	```bash
-	psburn create script.ps1
-	```
-
-	This command will generated a c# file named after the basename of your powershell script. Now build a executable out of this file by running **build** command.
-
-	```bash
-	psburn build script.cs script.ps1
-	```
+```bash
+psburn build script.ps1 script.cs
+```
 
 Your powershell script will be packaged under dist folder of working directory. Use [mkbundle](https://www.mono-project.com/docs/tools+libraries/tools/mkbundle/) to bundle exe if you are using mono.
 
-## Access more options with cbuild command
-
-You can access more options like icon, name etc. while build executables with cbuild command, just remove **--no-prompt** flag from your cbuild command. Then you will be prompted to supply extra arguments to pyinstaller. You can check pyinstaller help for available options.
+To package scripts using python, just add **--py** flag in *create* command to generate python binder file instead of c#.
 
 ```bash
-pyinstaller -h
+psburn create script.ps1 --py
+psburn build script.ps1 script.py
 ```
 
 ## Merging dll and exe files
 
-If you use *build* command it generates a dll which is requires by executable to run properly, you can merge this dll and exe using [ilmerge](https://github.com/dotnet/ILMerge) or [ilrepack](https://github.com/gluck/il-repack).
+If you use c# binder file to build a executable then it generates dll which are required by executable to run properly, you can merge this dll and exe using [ilmerge](https://github.com/dotnet/ILMerge) or [ilrepack](https://github.com/gluck/il-repack). You can also use **--merge** flag on windows, which will use ilmerge to merge dll and exe.
+
+```bash
+psburn build script.ps1 script.cs --merge
+```
 
 === "Windows"
 
 	```bash
-	ILMerge ICSharpCode.SharpZipLib.dll <file.exe> /o:a.exe
+	ILMerge /o:a.exe main_file.exe PsburnCliParser.dll ICSharpCode.SharpZipLib.dll
 	```
 
 === "Linux/MacOS"
 
 	```bash
-	mono ILRepack.exe ICSharpCode.SharpZipLib.dll <file.exe> /o:a.exe
+	mono ILRepack.exe /o:a.exe main_file.exe PsburnCliParser.dll ICSharpCode.SharpZipLib.dll 
 	```
+
+## Access more options with build command
+
+You can access more options like icon, name etc. while build executables with build command, just add **--pyinstaller-prompt** flag to your build command. Then you will be prompted to supply extra arguments to pyinstaller. You can check pyinstaller help for available options.
+
+```bash
+pyinstaller -h
+```
 
 ## Oops got an error while building an executable, what to do ?
 

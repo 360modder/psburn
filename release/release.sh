@@ -1,10 +1,9 @@
 #!/bin/bash
-# envoirnment: ubuntu-18.04
 
 
 # Global Variables
 tools_install_path="../psburn"
-psburn_version="1.0.0"
+psburn_version="1.1.3"
 release_dir="psburn.$psburn_version.releases"
 build_counts=$((build_counts+0))
 
@@ -65,59 +64,8 @@ create_package () { # package, runtime_identifier
     ((build_counts++))
 }
 
-create_exe () {
-    echo ""
-
-    if [ -e "Inno Setup 6" ]
-    then
-        echo_green "[$(date '+%T %F')] Inno Setup 6 is already installed"
-    else
-        echo "[$(date '+%T %F')] Installing Inno Setup 6"
-        wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=103QGKdC60IBXhKH2nAW0PerulLHZaINa' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=103QGKdC60IBXhKH2nAW0PerulLHZaINa" -O "Inno Setup 6.zip" && rm -rf /tmp/cookies.txt
-        unzip "Inno Setup 6.zip"
-        rm "Inno Setup 6.zip"
-    fi
-    
-    if ! [ -x "$(command -v wine)" ]; then
-        echo "[$(date '+%T %F')] Installing Wine"
-        sudo dpkg --add-architecture i386
-        sudo apt update
-        sudo apt install wine64 wine32
-    fi
-        echo_green "[$(date '+%T %F')] Wine is already installed"
-
-    echo "[$(date '+%T %F')] Creating setup package for win-x64"
-    echo "[$(date '+%T %F')] Editing psburn.csproj"
-
-    if python3 edit_csproj.py win-x64; then
-        echo_green "[$(date '+%T %F')] psburn.csproj edited successfully"
-    else
-        echo_red "[$(date '+%T %F')] $error_message"
-        exit 1
-    fi
-
-    echo "[$(date '+%T %F')] Running dotnet publish"
-    cd ../psburn && dotnet publish
-    cd ../release
-
-    echo "[$(date '+%T %F')] Running iscc.exe"
-    wine "Inno Setup 6/iscc.exe" setup.iss
-
-    if [ -e "psburn.$psburn_version.win-x64.exe" ]
-    then
-        cp "psburn.$psburn_version.win-x64.exe" "$release_dir/psburn.$psburn_version.win-x64.exe"
-        echo_green "[$(date '+%T %F')] psburn.$psburn_version.win-x64.exe setup package created and copied to $release_dir"
-    else
-        echo_red "[$(date '+%T %F')] Creating setup package for win-x64 failed. View last executed command for errors."
-        exit 1
-    fi
-
-    ((build_counts++))
-}
-
-
 if ! [ -x "$(command -v dotnet)" ]; then
-    echo "[$(date '+%T %F')] Installing .NET Core SDK & Runtime 3.1"
+    echo "[$(date '+%T %F')] Installing .NET Core 3.1 SDK & Runtime"
     wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
     sudo apt-get update; \
@@ -133,8 +81,6 @@ echo "[$(date '+%T %F')] Installing and adding .NET packaging tools to project"
 cd $tools_install_path
 install_tool dotnet-zip
 install_tool dotnet-tarball
-install_tool dotnet-rpm
-install_tool dotnet-deb
 cd ../release
 
 echo "[$(date '+%T %F')] Creating releases at $release_dir"
@@ -143,16 +89,9 @@ mkdir $release_dir
 
 # Zip Releases
 create_package zip win-x64
-create_package zip win-x86
 # Tarball Releases
 create_package tar.gz linux-x64
 create_package tar.gz osx-x64
-# Rpm Releases
-create_package rpm linux-x64
-# Deb Releases
-create_package deb linux-x64
-# Setup Releases
-create_exe
 
 echo ""
 echo_green "[$(date '+%T %F')] Total $build_counts packages were created"

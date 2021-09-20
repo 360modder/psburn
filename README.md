@@ -19,21 +19,15 @@ Vist psburn's [website](https://360modder.github.io/psburn/) for more details.
 
 ## Installations
 
-First setup a [building envoirnment](https://360modder.github.io/psburn/gettingstarted/installations/#building-envoirnments) then you can download and install a psburn package for any of the following platforms.
+First setup a [building envoirnment](https://360modder.github.io/psburn/gettingstarted/installations/#building-envoirnments) then you can download and install a psburn from binary archive  for any of the following platforms.
 
-| Supported Platform | Download                                                                                        | How to Install           |
-|--------------------|-------------------------------------------------------------------------------------------------|--------------------------|
-| Windows (x64)      | [.exe](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.win-x64.exe)   |                          |
-| Debian             | [.deb](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.linux-x64.deb) | [Instructions][packages] |
-| Red Hat            | [.rpm](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.linux-x64.rpm) | [Instructions][packages] |
+You can download the psburn binary archives for Windows, Linux and MacOS.
 
-You can also download the psburn binary archives for Windows, Linux and MacOS.
-
-| Supported Platform | Download                                                                                                                                                                                        | How to Install                  |
-|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|
-| Windows            | [32-bit](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.win-x86.zip)/[64-bit](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.win-x64.zip) | [Instructions][binary-archives] |
-| Linux              | [64-bit](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.linux-x64.tar.gz)                                                                                            | [Instructions][binary-archives] |
-| MacOS              | [64-bit](https://github.com/360modder/psburn/releases/download/v1.0.0/psburn.1.0.0.osx-x64.tar.gz)                                                                                              | [Instructions][binary-archives] |
+| Supported Platform | Download                                                                                             | How to Install                  |
+|--------------------|------------------------------------------------------------------------------------------------------|---------------------------------|
+| Windows            | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.zip)      | [Instructions][binary-archives] |
+| Linux              | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.linux-x64.tar.gz) | [Instructions][binary-archives] |
+| MacOS              | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.osx-x64.tar.gz)   | [Instructions][binary-archives] |
 
 To install a specific version, visit [releases](https://github.com/360modder/psburn/releases).
 
@@ -44,18 +38,18 @@ To install a specific version, visit [releases](https://github.com/360modder/psb
 
 Following commands are in reference of powershell script named **script.ps1**
 
-- Windows
+- Windows (backend c# --> c# 5 compiler)
 
 ```bash
 psburn create script.ps1 -o script.cs
-psburn build script.cs script.ps1
+psburn build script.ps1 script.cs
 ```
 
-- Linux/MacOS
+- Linux/MacOS (backend python --> pyinstaller)
 
 ```bash
-psburn cross script.ps1 -o script.py
-psburn cbuild script.py script.ps1 --no-prompt
+psburn create script.ps1 --py -o script.py
+psburn build script.ps1 script.py
 ```
 
 Your powershell script will be packaged under dist folder of working directory. [Learn More](https://360modder.github.io/psburn/gettingstarted/packagepsscripts/)
@@ -65,8 +59,7 @@ Your powershell script will be packaged under dist folder of working directory. 
 - [Package Powershell Scripts](https://360modder.github.io/psburn/gettingstarted/packagepsscripts/)
 - [Argparse Integration](https://360modder.github.io/psburn/gettingstarted/argparseintegration/)
 - [Creating Self Contained Executable](https://360modder.github.io/psburn/usage/creatingselfcontainedexecutable/)
-- [No Extract](https://360modder.github.io/psburn/usage/noextract/)
-- [CLI API Documentation](https://360modder.github.io/psburn/documentation/python/cross/)
+- [CLI API Documentation](https://360modder.github.io/psburn/documentation/create/)
 
 ## Building From Source
 
@@ -74,8 +67,8 @@ You can build psburn release binaries from source by following the given instruc
 
 Requires*
 
-- ubuntu-18.04
-- python3.6+
+- [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1)
+- [python3.6+](https://www.python.org/downloads/)
 
 Clone the psburn github repository.
 

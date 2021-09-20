@@ -112,7 +112,7 @@ namespace Psburn
 
         public static void Build(string psscript, string binderfile, string powershellzip, string resourceszip,
                                  bool onedir, string icon, bool noconsole, bool uacadmin, string cscpath,
-                                 bool pyinstallerprompt, bool debug, bool verbose)
+                                 bool merge, bool pyinstallerprompt, bool debug, bool verbose)
         {
             if (Directory.Exists("dist")) { Directory.Delete("dist", true); }
             Directory.CreateDirectory("dist/.cache");
@@ -150,6 +150,23 @@ namespace Psburn
                 Console.WriteLine($"{CscExe} {string.Join(" ", CscArgs)}\n");
 
                 Utils.RunSubprocess(CscExe, string.Join(" ", CscArgs));
+
+                if (File.Exists($"dist/{Path.GetFileNameWithoutExtension(binderfile)}.exe") && merge)
+                {
+                    Utils.PrintColoredText("info: ", ConsoleColor.Blue);
+                    Console.WriteLine("merging dll into exe.");
+
+                    Utils.RunSubprocess(
+                        Path.Join(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "ILMerge/ILMerge.exe"),
+                        $"/out:dist/merged.exe dist/{Path.GetFileNameWithoutExtension(binderfile)}.exe dist/PsburnCliParser.dll dist/ICSharpCode.SharpZipLib.dll"
+                    );
+
+                    File.Delete("dist/merged.pdb");
+                    File.Delete($"dist/{Path.GetFileNameWithoutExtension(binderfile)}.exe");
+                    File.Delete("dist/PsburnCliParser.dll");
+                    File.Delete("dist/ICSharpCode.SharpZipLib.dll");
+                    File.Move("dist/merged.exe", $"dist/{Path.GetFileNameWithoutExtension(binderfile)}.exe");
+                }
 
                 if (debug == false)
                 {
