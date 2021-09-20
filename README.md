@@ -15,13 +15,13 @@
 
 psburn is a tool to package powershell scripts into executables by binding it with a c# or python program.
 
-Vist psburn's [website](https://360modder.github.io/psburn/) for more details.
+Visit psburn's [website](https://360modder.github.io/psburn/) for more details.
 
 ## Installations
 
 First setup a [building envoirnment](https://360modder.github.io/psburn/gettingstarted/installations/#building-envoirnments) then you can download and install a psburn from binary archive  for any of the following platforms.
 
-You can download the psburn binary archives for Windows, Linux and MacOS.
+Download [setup.exe]((https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.exe)) or you can download the psburn binary archives for Windows, Linux and MacOS.
 
 | Supported Platform | Download                                                                                             | How to Install                  |
 |--------------------|------------------------------------------------------------------------------------------------------|---------------------------------|
@@ -60,10 +60,16 @@ Your powershell script will be packaged under dist folder of working directory. 
 - [Argparse Integration](https://360modder.github.io/psburn/gettingstarted/argparseintegration/)
 - [Creating Self Contained Executable](https://360modder.github.io/psburn/usage/creatingselfcontainedexecutable/)
 - [CLI API Documentation](https://360modder.github.io/psburn/documentation/create/)
+- [Changelog](https://360modder.github.io/psburn/development/changelog/)
+
+## How does this works ?
+
+- [C# Builds](https://github.com/360modder/psburn/tree/master/psburn_cli_parser/csharp_binder) 
+- [Python Builds](https://github.com/360modder/psburn/tree/master/psburn_cli_parser/python_binder)
 
 ## Building From Source
 
-You can build psburn release binaries from source by following the given instructions.
+You can build psburn release binaries from source by following the given instructions. [Know More](https://360modder.github.io/psburn/development/buildingpsburn/)
 
 Requires*
 

@@ -8,7 +8,7 @@ Building envoirnments are necessary to build a executable out a file using psbur
 
 === "Python"
 
-	[python3.6+](https://www.python.org/) and [pip](https://pip.pypa.io/en/stable/installing/) should be installed, then install pyinstaller.
+	[python3.6+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/) should be installed, then install pyinstaller.
 
 	```bash
 	pip install pyinstaller

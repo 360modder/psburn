@@ -17,12 +17,13 @@ namespace PsburnCliParser
 
         public ArgumentDataNamespace(string ParsedArgumentData)
         {
-            Argument = ParsedArgumentData.Split(',')[0];
-            Type = ParsedArgumentData.Split(',')[1];
-            Required = ParsedArgumentData.Split(',')[2] == "true";
-            Value = ParsedArgumentData.Split(',')[3];
-            Alias = ParsedArgumentData.Split(',')[4];
-            Help = ParsedArgumentData.Split(',')[5];
+            string[] Data = ParsedArgumentData.Split(',');
+            Argument = Data[0];
+            Type = Data[1];
+            Required = Data[2] == "true";
+            Value = Data[3];
+            Alias = Data[4];
+            Help = Data[5];
         }
     }
 
