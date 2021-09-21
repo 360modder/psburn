@@ -4,7 +4,7 @@ Since psburn is a cross platform tool, its binaries are distributed for windows,
 
 ## Building Envoirnments
 
-Building envoirnments are necessary to build a executable out a file using psburn. Choose one such envoirnment from python or c#. python envoirnment is recommended on linux and macos and c# on windows. 
+Building envoirnments are necessary to build a executable out a file using psburn. Choose one such envoirnment from python and c#. python envoirnment is recommended on linux and macos and c# on windows. 
 
 === "Python"
 
@@ -18,22 +18,13 @@ Building envoirnments are necessary to build a executable out a file using psbur
 
 	Windows does't require any C# envoirnment as it comes integrated with .NET Framework but on linux and macos a compatible version of [mono](https://www.mono-project.com/download/stable/) should be installed.
 
+## Download
+
+[Windows :material-microsoft-windows:](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.exe){ .md-button .md-button--primary }
+
 ## Binary Archives
 
-Binary archives installations steps on windows, linux and macos.
-
-=== "Windows"
-
-	```ps1
-	# Download the zipped binary
-	Invoke-WebRequest https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.zip -o psburn.1.1.3.win-x64.zip
-
-	# Extract zipped binary
-	Expand-Archive psburn.1.1.3.win-x64.zip psburn.1.1.3.win-x64
-
-	# Setup path envoirnment variables
-	$env:Path = "psburn.1.1.3.win-x64;$env:Path"
-	```
+Binary archives installations steps on linux and macos.
 
 === "Linux"
 

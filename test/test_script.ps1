@@ -4,6 +4,6 @@
 
 Write-Output "$name you may have a good day"
 
-if ($two) {
+if ($twice) {
 	Write-Output "$name you may have a good day second time"
 }

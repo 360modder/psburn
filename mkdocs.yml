@@ -73,6 +73,4 @@ nav:
     - Argparse: documentation/argparse.md
     - Runtime: documentation/runtime.md
   - Development:
-    - Building PsBurn: development/buildingpsburn.md
-    - Building Docs: development/buildingdocs.md
-    - Changelog: development/changelog.md
+    - Changelog: changelog.md

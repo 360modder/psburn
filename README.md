@@ -19,20 +19,19 @@ Visit psburn's [website](https://360modder.github.io/psburn/) for more details.
 
 ## Installations
 
-First setup a [building envoirnment](https://360modder.github.io/psburn/gettingstarted/installations/#building-envoirnments) then you can download and install a psburn from binary archive  for any of the following platforms.
+First setup a [building envoirnment](https://360modder.github.io/psburn/gettingstarted/installations/#building-envoirnments) then you can download and install psburn for any of the following platform.
 
-Download [setup.exe]((https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.exe)) or you can download the psburn binary archives for Windows, Linux and MacOS.
+You can download the psburn for Windows, Linux and MacOS.
 
 | Supported Platform | Download                                                                                             | How to Install                  |
 |--------------------|------------------------------------------------------------------------------------------------------|---------------------------------|
-| Windows            | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.zip)      | [Instructions][binary-archives] |
+| Windows            | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.exe)      |                                 |
 | Linux              | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.linux-x64.tar.gz) | [Instructions][binary-archives] |
 | MacOS              | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.osx-x64.tar.gz)   | [Instructions][binary-archives] |
 
 To install a specific version, visit [releases](https://github.com/360modder/psburn/releases).
 
 [binary-archives]: https://360modder.github.io/psburn/gettingstarted/installations/#binary-archives
-[packages]: https://360modder.github.io/psburn/gettingstarted/installations/#packages
 
 ## Usage
 
@@ -69,12 +68,13 @@ Your powershell script will be packaged under dist folder of working directory. 
 
 ## Building From Source
 
-You can build psburn release binaries from source by following the given instructions. [Know More](https://360modder.github.io/psburn/development/buildingpsburn/)
+You can build psburn release binaries from source by following the given instructions.
 
 Requires*
 
 - [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1)
-- [python3.6+](https://www.python.org/downloads/)
+- [Inno Setup](https://jrsoftware.org/isdl.php)
+- [Git Bash](https://git-scm.com/download)
 
 Clone the psburn github repository.
 
@@ -82,8 +82,18 @@ Clone the psburn github repository.
 git clone https://github.com/360modder/psburn.git
 ```
 
-Now execute release.sh from psburn/release
+Now run `make help` to see available targets.
 
 ```bash
-cd psburn/release && chmod +x release.sh && ./release.sh
+make help
+```
+
+```
+make targets:
+  test                  run a test for script compile task
+  clean                 clean bin and test generated files
+  update_assets         update assets file in assets directory
+  release               package tarball distribution for linux-x64 and osx-x64
+  setup                 create inno setup installer for win-x64
+  help                  shows this help message
 ```

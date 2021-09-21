@@ -126,7 +126,7 @@ namespace PsburnCliParser
 
                         if (Arg.Required && PostionalCount == 0)
                         {
-                            Console.WriteLine("\npostional arguments:");
+                            Console.WriteLine("\npositional arguments:");
                             PostionalCount += 1;
                         }
 

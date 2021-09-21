@@ -13,7 +13,7 @@ Integrating argparse is very simple, you just have to write one line json descri
 
 Write-Output "$name you may have a good day"
 
-if ($two) {
+if ($twice) {
 	Write-Output "$name you may have a good day second time"
 }
 ```
@@ -33,7 +33,7 @@ greet -h
 
 	gretting program
 
-	postional arguments:
+	positional arguments:
 	name                         name to greet
 
 	optional arguments:
