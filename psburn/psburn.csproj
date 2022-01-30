@@ -4,8 +4,8 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU</Platforms>
-    <Authors>360modder</Authors>
-    <RepositoryUrl>htttps://github.com/360modder/psburn</RepositoryUrl>
+    <Authors>clitic</Authors>
+    <RepositoryUrl>htttps://github.com/clitic/psburn</RepositoryUrl>
     <Configuration>Debug</Configuration>
     <Version>1.1.3</Version>
   </PropertyGroup>

@@ -3,8 +3,8 @@
 
 #define MyAppName "psburn"
 #define MyAppVersion "1.1.3"
-#define MyAppPublisher "360modder"
-#define MyAppURL "https://360modder.github.io/psburn"
+#define MyAppPublisher "clitic"
+#define MyAppURL "https://clitic.github.io/psburn"
 
 #include "environment.iss"
 

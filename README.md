@@ -5,33 +5,33 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/360modder/psburn/releases">
-    <img src="https://img.shields.io/github/downloads/360modder/psburn/total.svg" alt="Total Downloads"/>
+  <a href="https://github.com/clitic/psburn/releases">
+    <img src="https://img.shields.io/github/downloads/clitic/psburn/total.svg" alt="Total Downloads"/>
   </a>
-  <a href="https://github.com/360modder/psburn/releases">
-    <img src="https://img.shields.io/github/release/360modder/psburn.svg" alt="Latest Version"/>
+  <a href="https://github.com/clitic/psburn/releases">
+    <img src="https://img.shields.io/github/release/clitic/psburn.svg" alt="Latest Version"/>
   </a>
 </p>
 
 psburn is a tool to package powershell scripts into executables by binding it with a c# or python program.
 
-Visit psburn's [website](https://360modder.github.io/psburn/) for more details.
+Visit psburn's [website](https://clitic.github.io/psburn/) for more details.
 
 ## Installations
 
-First setup a [building envoirnment](https://360modder.github.io/psburn/gettingstarted/installations/#building-envoirnments) then you can download and install psburn for any of the following platform.
+First setup a [building envoirnment](https://clitic.github.io/psburn/gettingstarted/installations/#building-envoirnments) then you can download and install psburn for any of the following platform.
 
 You can download the psburn for Windows, Linux and MacOS.
 
 | Supported Platform | Download                                                                                             | How to Install                  |
 |--------------------|------------------------------------------------------------------------------------------------------|---------------------------------|
-| Windows            | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.exe)      |                                 |
-| Linux              | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.linux-x64.tar.gz) | [Instructions][binary-archives] |
-| MacOS              | [64-bit](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.osx-x64.tar.gz)   | [Instructions][binary-archives] |
+| Windows            | [64-bit](https://github.com/clitic/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.exe)      |                                 |
+| Linux              | [64-bit](https://github.com/clitic/psburn/releases/download/v1.1.3/psburn.1.1.3.linux-x64.tar.gz) | [Instructions][binary-archives] |
+| MacOS              | [64-bit](https://github.com/clitic/psburn/releases/download/v1.1.3/psburn.1.1.3.osx-x64.tar.gz)   | [Instructions][binary-archives] |
 
-To install a specific version, visit [releases](https://github.com/360modder/psburn/releases).
+To install a specific version, visit [releases](https://github.com/clitic/psburn/releases).
 
-[binary-archives]: https://360modder.github.io/psburn/gettingstarted/installations/#binary-archives
+[binary-archives]: https://clitic.github.io/psburn/gettingstarted/installations/#binary-archives
 
 ## Usage
 
@@ -51,20 +51,20 @@ psburn create script.ps1 --py -o script.py
 psburn build script.ps1 script.py
 ```
 
-Your powershell script will be packaged under dist folder of working directory. [Learn More](https://360modder.github.io/psburn/gettingstarted/packagepsscripts/)
+Your powershell script will be packaged under dist folder of working directory. [Learn More](https://clitic.github.io/psburn/gettingstarted/packagepsscripts/)
 
 ## Quick Links
 
-- [Package Powershell Scripts](https://360modder.github.io/psburn/gettingstarted/packagepsscripts/)
-- [Argparse Integration](https://360modder.github.io/psburn/gettingstarted/argparseintegration/)
-- [Creating Self Contained Executable](https://360modder.github.io/psburn/usage/creatingselfcontainedexecutable/)
-- [CLI API Documentation](https://360modder.github.io/psburn/documentation/create/)
-- [Changelog](https://360modder.github.io/psburn/development/changelog/)
+- [Package Powershell Scripts](https://clitic.github.io/psburn/gettingstarted/packagepsscripts/)
+- [Argparse Integration](https://clitic.github.io/psburn/gettingstarted/argparseintegration/)
+- [Creating Self Contained Executable](https://clitic.github.io/psburn/usage/creatingselfcontainedexecutable/)
+- [CLI API Documentation](https://clitic.github.io/psburn/documentation/create/)
+- [Changelog](https://clitic.github.io/psburn/changelog/)
 
 ## How does this works ?
 
-- [C# Builds](https://github.com/360modder/psburn/tree/master/psburn_cli_parser/csharp_binder) 
-- [Python Builds](https://github.com/360modder/psburn/tree/master/psburn_cli_parser/python_binder)
+- [C# Builds](https://github.com/clitic/psburn/tree/master/psburn_cli_parser/csharp_binder) 
+- [Python Builds](https://github.com/clitic/psburn/tree/master/psburn_cli_parser/python_binder)
 
 ## Building From Source
 
@@ -79,13 +79,13 @@ Requires*
 Clone the psburn github repository.
 
 ```bash
-git clone https://github.com/360modder/psburn.git
+git clone https://github.com/clitic/psburn.git
 ```
 
 Now run `make help` to see available targets.
 
 ```bash
-make help
+$ make help
 ```
 
 ```

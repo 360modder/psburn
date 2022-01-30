@@ -12,5 +12,5 @@
 </p>
 
 <p align="center">
-  <button class="md-button" onclick="location.href = 'https://github.com/360modder/psburn';">Github Repository</button>
+  <button class="md-button" onclick="location.href = 'https://github.com/clitic/psburn';">Github Repository</button>
 </p>

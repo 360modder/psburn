@@ -1,16 +1,16 @@
 # Project information
 site_name: PsBurn
-site_url: https://360modder.github.io/psburn/
-site_author: 360modder
+site_url: https://clitic.github.io/psburn/
+site_author: clitic
 site_description: psburn is cross platform tool to package powershell scripts into executables by encapsulating it inside a python or c# program.
 
 # Repository
-repo_url: https://github.com/360modder/psburn
-repo_name: 360modder/psburn
+repo_url: https://github.com/clitic/psburn
+repo_name: clitic/psburn
 edit_uri: ""
 
 # Copyright
-copyright: Copyright &copy; 2021 360modder
+copyright: Copyright &copy; 2021 clitic
 
 # Configuration
 theme:
@@ -39,7 +39,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/360modder
+      link: https://github.com/clitic
 
 # Extensions
 markdown_extensions:

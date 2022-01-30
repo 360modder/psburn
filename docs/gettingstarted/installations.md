@@ -20,7 +20,7 @@ Building envoirnments are necessary to build a executable out a file using psbur
 
 ## Download
 
-[Windows :material-microsoft-windows:](https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.exe){ .md-button .md-button--primary }
+[Windows :material-microsoft-windows:](https://github.com/clitic/psburn/releases/download/v1.1.3/psburn.1.1.3.win-x64.exe){ .md-button .md-button--primary }
 
 ## Binary Archives
 
@@ -30,42 +30,42 @@ Binary archives installations steps on linux and macos.
 
 	```bash
 	# Download the psburn '.tar.gz' archive
-	curl -L -o /tmp/psburn.tar.gz https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.linux-x64.tar.gz
+	curl -L -o /tmp/psburn.tar.gz https://github.com/clitic/psburn/releases/download/v1.1.3/psburn.1.1.3.linux-x64.tar.gz
 
 	# Create the target folder where psburn will be placed
-	sudo mkdir -p /opt/360modder/psburn
+	sudo mkdir -p /opt/clitic/psburn
 
 	# Expand psburn to the target folder
-	sudo tar zxf /tmp/psburn.tar.gz -C /opt/360modder/psburn
+	sudo tar zxf /tmp/psburn.tar.gz -C /opt/clitic/psburn
 
 	# Set execute permissions
-	sudo chmod +x /opt/360modder/psburn/psburn
+	sudo chmod +x /opt/clitic/psburn/psburn
 
 	# Create the symbolic link that points to psburn
-	sudo ln -s /opt/360modder/psburn/psburn /usr/bin/psburn
+	sudo ln -s /opt/clitic/psburn/psburn /usr/bin/psburn
 
 	# Uninstall binary archive
-	# sudo rm -rf /usr/bin/psburn/psburn /opt/360modder/psburn
+	# sudo rm -rf /usr/bin/psburn/psburn /opt/clitic/psburn
 	```
 
 === "MacOS"
 
 	```bash
 	# Download the psburn '.tar.gz' archive
-	curl -L -o /tmp/psburn.tar.gz https://github.com/360modder/psburn/releases/download/v1.1.3/psburn.1.1.3.osx-x64.tar.gz
+	curl -L -o /tmp/psburn.tar.gz https://github.com/clitic/psburn/releases/download/v1.1.3/psburn.1.1.3.osx-x64.tar.gz
 
 	# Create the target folder where psburn will be placed
-	sudo mkdir -p /usr/local/360modder/psburn
+	sudo mkdir -p /usr/local/clitic/psburn
 
 	# Expand psburn to the target folder
-	sudo tar zxf /tmp/psburn.tar.gz -C /usr/local/360modder/psburn
+	sudo tar zxf /tmp/psburn.tar.gz -C /usr/local/clitic/psburn
 
 	# Set execute permissions
-	sudo chmod +x /usr/local/360modder/psburn/psburn
+	sudo chmod +x /usr/local/clitic/psburn/psburn
 
 	# Create the symbolic link that points to psburn
-	sudo ln -s /usr/local/360modder/psburn/psburn /usr/local/bin/psburn
+	sudo ln -s /usr/local/clitic/psburn/psburn /usr/local/bin/psburn
 
 	# Uninstall binary archive
-	# sudo rm -rf /usr/local/bin/psburn /usr/local/360modder/psburn
+	# sudo rm -rf /usr/local/bin/psburn /usr/local/clitic/psburn
 	```

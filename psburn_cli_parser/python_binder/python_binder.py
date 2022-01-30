@@ -43,7 +43,7 @@ for ParsedArgumentData in ParsedParameters:
 
 	if Arg.Required:
 		ArgumentParser.add_argument(Arg.Argument, help=Arg.Help)
-	
+
 	else:
 		DestForArgument = Arg.Argument.replace("-", "")
 		HelpText = Arg.Help + f" [default: {Arg.Value}]"
@@ -55,12 +55,11 @@ for ParsedArgumentData in ParsedParameters:
 			else:
 				ArgumentParser.add_argument(f"-{Arg.Alias}", f"--{Arg.Argument}", dest=DestForArgument, help=HelpText)
 
+		elif Arg.Type == "bool":
+			BoolSwitch = "store_true" if Arg.Value == "false" else "store_false"
+			ArgumentParser.add_argument(f"--{Arg.Argument}", dest=DestForArgument, action=BoolSwitch, help=HelpText)
 		else:
-			if Arg.Type == "bool":
-				BoolSwitch = "store_true" if Arg.Value == "false" else "store_false"
-				ArgumentParser.add_argument(f"--{Arg.Argument}", dest=DestForArgument, action=BoolSwitch, help=HelpText)
-			else:
-				ArgumentParser.add_argument(f"--{Arg.Argument}", dest=DestForArgument, help=HelpText)
+			ArgumentParser.add_argument(f"--{Arg.Argument}", dest=DestForArgument, help=HelpText)
 
 ArgumentParser.add_argument("--cat", dest="cat", action="store_true", help="instead of running cat powershell script into console [default: false]")
 ParsedArgparseArguments = ArgumentParser.parse_args()
@@ -78,10 +77,10 @@ if ParsedArgparseArguments.cat:
 		sys.exit(0)
 
 # Code generation for supplied arguments
-ParsedArgparseArgumentsDictionary = {}
-
-for Argument, Value in ParsedArgparseArguments._get_kwargs():
-	ParsedArgparseArgumentsDictionary[Argument] = Value
+ParsedArgparseArgumentsDictionary = {
+    Argument: Value
+    for Argument, Value in ParsedArgparseArguments._get_kwargs()
+}
 
 PSEmbedString = ""
 for ParsedArgumentData in ParsedParameters:
@@ -99,7 +98,7 @@ StorageDirectory = resource_path("")
 PSScriptRoot = os.path.split(sys.executable)[0]
 
 # Determining the path of powershell executable
-OneFile = True if OneDir == False else False
+OneFile = not OneDir
 Executable = "pwsh.exe" if IsWindows else "pwsh"
 Executable = os.path.join(StorageDirectory, "pwsh", Executable) if OneFile else os.path.join(PSScriptRoot, "pwsh", Executable)
 
